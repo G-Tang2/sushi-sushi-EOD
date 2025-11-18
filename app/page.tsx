@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -10,9 +11,11 @@ export default function Home() {
           </h1>
           <p className="mb-8 text-sm text-zinc-500">Designed for Sushi Sushi</p>
         </div>
-        <Button variant="outline" size="lg">
-          Get Started
-        </Button>
+        <Link href="/safe" passHref>
+          <Button variant="outline" size="lg">
+            Get Started
+          </Button>
+        </Link>
       </main>
     </div>
   );
