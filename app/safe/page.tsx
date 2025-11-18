@@ -1,6 +1,9 @@
-// import { Button } from "@/components/ui/button";
+"use client"
+
+import { Button } from "@/components/ui/button";
 import MoneyCounter from "@/components/ui/moneyCounter";
-// import Link from "next/link";
+import Link from "next/link";
+import { safeQuantitiesAtom, safeRollsAtom } from "@/state/moneyAtoms";
 
 const denominations = [
   { label: "$100", value: 100, rollSize: undefined },
@@ -24,7 +27,12 @@ export default function Safe() {
           <h1 className="mb-8 text-4xl font-bold text-zinc-800">
             Safe
           </h1>
-          <MoneyCounter denominations={denominations} />
+          <MoneyCounter denominations={denominations} quantitiesAtom={safeQuantitiesAtom} rollsAtom={safeRollsAtom}/>
+          <Link href="/till" passHref>
+            <Button variant="outline" size="lg" className="mb-8">
+                Next
+            </Button>
+          </Link>
       </main>
     </div>
   );

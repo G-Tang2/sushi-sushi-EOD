@@ -1,5 +1,6 @@
 "use client";
 
+import { PrimitiveAtom } from "jotai";
 import { useState } from "react";
 
 interface Denomination {
@@ -10,6 +11,8 @@ interface Denomination {
 
 interface MoneyCounterProps {
   denominations: Denomination[];
+  quantitiesAtom: PrimitiveAtom<Record<string, number>>;
+  rollsAtom?: PrimitiveAtom<Record<string, number>>;
 }
 
 export default function MoneyCounter({ denominations }: MoneyCounterProps) {
