@@ -1,5 +1,11 @@
 import { atom, PrimitiveAtom } from "jotai";
 
+export interface SalesState {
+  netSales: number;
+  grossSales: number;
+  cashReading: number;
+}
+
 export const safeQuantitiesAtom = atom<Record<string, number>>({});
 export const safeRollsAtom = atom<Record<string, number>>({});
 export const tillQuantitiesAtom = atom<Record<string, number>>({});
@@ -29,3 +35,13 @@ export const createTotalAtom = (
       return acc + looseQty * value + rollQty * rollValue;
     }, 0);
   });
+
+export const createEODReportAtom = (
+  initial?: Partial<SalesState>
+): PrimitiveAtom<SalesState> => {
+  return atom<SalesState>({
+    netSales: initial?.netSales || 0,
+    grossSales: initial?.grossSales || 0,
+    cashReading: initial?.cashReading || 0,
+  });
+};
