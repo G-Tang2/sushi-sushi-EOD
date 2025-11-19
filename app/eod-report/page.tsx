@@ -9,6 +9,8 @@ import {
   handrollCountAtom,
   pettyCashAtom,
 } from "@/state/moneyAtoms";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 interface SalesStateEditorProps {
   salesAtom: PrimitiveAtom<SalesState>;
@@ -119,6 +121,11 @@ export default function EODReport() {
             +
           </button>
         </div>
+        <Link href="/summary" passHref>
+          <Button variant="outline" size="lg" className="mb-8">
+            Next
+          </Button>
+        </Link>
       </main>
     </div>
   );
