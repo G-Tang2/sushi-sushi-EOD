@@ -10,6 +10,8 @@ export const safeQuantitiesAtom = atom<Record<string, number>>({});
 export const safeRollsAtom = atom<Record<string, number>>({});
 export const tillQuantitiesAtom = atom<Record<string, number>>({});
 export const bankTakingQuantitiesAtom = atom<Record<string, number>>({});
+export const handrollCountAtom = atom<number>(0);
+export const pettyCashAtom = atom<number>(0);
 
 export const createTotalAtom = (
   quantitiesAtoms: PrimitiveAtom<Record<string, number>>[],

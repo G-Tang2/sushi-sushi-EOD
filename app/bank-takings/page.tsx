@@ -42,7 +42,7 @@ export default function Takings() {
           denominations={denominations}
           quantitiesAtom={bankTakingQuantitiesAtom}
         />
-        <Link href="/bank-takings" passHref>
+        <Link href="/eod-report" passHref>
           <Button variant="outline" size="lg" className="mb-8">
             Next
           </Button>
