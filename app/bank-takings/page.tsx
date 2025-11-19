@@ -1,17 +1,21 @@
-"use client"
+"use client";
 
 import {
   safeQuantitiesAtom,
   safeRollsAtom,
   tillQuantitiesAtom,
+  bankTakingQuantitiesAtom,
 } from "@/state/moneyAtoms";
 import { denominations } from "@/lib/denominations";
 import { createTotalAtom } from "@/state/moneyAtoms";
 import { useAtom } from "jotai";
 import React from "react";
+import MoneyCounter from "@/components/ui/MoneyCounter";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function Takings() {
-    const FLOAT = 1000;
+  const FLOAT = 1000;
   const totalAtom = React.useMemo(
     () =>
       createTotalAtom(
@@ -34,6 +38,15 @@ export default function Takings() {
         <div className="mt-4 text-lg text-right">
           Total cash to be banked: ${(total - FLOAT).toFixed(2)}
         </div>
+        <MoneyCounter
+          denominations={denominations}
+          quantitiesAtom={bankTakingQuantitiesAtom}
+        />
+        <Link href="/bank-takings" passHref>
+          <Button variant="outline" size="lg" className="mb-8">
+            Next
+          </Button>
+        </Link>
       </main>
     </div>
   );
