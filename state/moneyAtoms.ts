@@ -1,4 +1,5 @@
 import { atom, PrimitiveAtom } from "jotai";
+import { denominations } from "@/lib/denominations";
 
 export interface SalesState {
   netSales: number;
@@ -6,9 +7,14 @@ export interface SalesState {
   cashReading: number;
 }
 
+const initialTillQuantities = denominations.reduce((acc, { label }) => {
+  acc[label] = 0;
+  return acc;
+}, {} as Record<string, number>);
+
 export const safeQuantitiesAtom = atom<Record<string, number>>({});
 export const safeRollsAtom = atom<Record<string, number>>({});
-export const tillQuantitiesAtom = atom<Record<string, number>>({});
+export const tillQuantitiesAtom = atom(initialTillQuantities);
 export const bankTakingQuantitiesAtom = atom<Record<string, number>>({});
 export const handrollCountAtom = atom<number>(0);
 export const pettyCashAtom = atom<number>(0);
