@@ -14,7 +14,7 @@ export default function Till() {
             Till
           </h1>
           <MoneyCounter denominations={denominations} quantitiesAtom={tillQuantitiesAtom}/>
-          <Link href="/takings" passHref>
+          <Link href="/bank-takings" passHref>
             <Button variant="outline" size="lg" className="mb-8">
                 Next
             </Button>

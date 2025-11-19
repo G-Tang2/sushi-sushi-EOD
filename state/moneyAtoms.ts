@@ -1,8 +1,9 @@
 import { atom, PrimitiveAtom } from "jotai";
 
-export const tillQuantitiesAtom = atom<Record<string, number>>({});
 export const safeQuantitiesAtom = atom<Record<string, number>>({});
 export const safeRollsAtom = atom<Record<string, number>>({});
+export const tillQuantitiesAtom = atom<Record<string, number>>({});
+export const bankTakingQuantitiesAtom = atom<Record<string, number>>({});
 
 export const createTotalAtom = (
   quantitiesAtoms: PrimitiveAtom<Record<string, number>>[],
