@@ -25,7 +25,7 @@ export default function MoneyCounter({
 }: MoneyCounterProps) {
 
   const totalAtom = React.useMemo(
-    () => createTotalAtom(quantitiesAtom, rollsAtom, denominations),
+    () => createTotalAtom([quantitiesAtom], rollsAtom, denominations),
     [quantitiesAtom, rollsAtom, denominations]
   );
   const [total] = useAtom(totalAtom);

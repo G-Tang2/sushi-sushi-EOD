@@ -5,16 +5,24 @@ export const safeQuantitiesAtom = atom<Record<string, number>>({});
 export const safeRollsAtom = atom<Record<string, number>>({});
 
 export const createTotalAtom = (
-  quantitiesAtom: PrimitiveAtom<Record<string, number>>,
+  quantitiesAtoms: PrimitiveAtom<Record<string, number>>[],
   rollsAtom: PrimitiveAtom<Record<string, number>> | undefined,
   denominations: { label: string; value: number; rollSize?: number }[]
 ) =>
   atom((get) => {
-    const quantities = get(quantitiesAtom);
+    // Aggregate quantities from all quantity atoms by summing corresponding keys
+    const aggregatedQuantities = quantitiesAtoms.reduce((acc, qa) => {
+      const quantities = get(qa);
+      for (const label in quantities) {
+        acc[label] = (acc[label] || 0) + quantities[label];
+      }
+      return acc;
+    }, {} as Record<string, number>);
+
     const rolls = rollsAtom ? get(rollsAtom) : {};
 
     return denominations.reduce((acc, { label, value, rollSize }) => {
-      const looseQty = quantities[label] || 0;
+      const looseQty = aggregatedQuantities[label] || 0;
       const rollQty = rolls[label] || 0;
       const rollValue = rollSize ? rollSize * value : 0;
       return acc + looseQty * value + rollQty * rollValue;
