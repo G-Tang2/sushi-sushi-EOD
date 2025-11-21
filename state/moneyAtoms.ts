@@ -12,13 +12,6 @@ const initialTillQuantities = denominations.reduce((acc, { label }) => {
   return acc;
 }, {} as Record<string, number>);
 
-export const safeQuantitiesAtom = atom<Record<string, number>>({});
-export const safeRollsAtom = atom<Record<string, number>>({});
-export const tillQuantitiesAtom = atom(initialTillQuantities);
-export const bankTakingQuantitiesAtom = atom<Record<string, number>>({});
-export const handrollCountAtom = atom<number>(0);
-export const pettyCashAtom = atom<number>(0);
-
 export const createTotalAtom = (
   quantitiesAtoms: PrimitiveAtom<Record<string, number>>[],
   rollsAtom: PrimitiveAtom<Record<string, number>> | undefined,
@@ -53,3 +46,13 @@ export const createEODReportAtom = (
     cashReading: initial?.cashReading || 0,
   });
 };
+
+export const safeQuantitiesAtom = atom<Record<string, number>>({});
+export const safeRollsAtom = atom<Record<string, number>>({});
+export const tillQuantitiesAtom = atom(initialTillQuantities);
+export const bankTakingQuantitiesAtom = atom<Record<string, number>>({});
+export const handrollCountAtom = atom<number>(0);
+export const pettyCashAtom = atom<number>(0);
+export const salesAtom = atom<PrimitiveAtom<SalesState>[]>([
+  createEODReportAtom(),
+]);

@@ -8,6 +8,7 @@ import {
   SalesState,
   handrollCountAtom,
   pettyCashAtom,
+  salesAtom,
 } from "@/state/moneyAtoms";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -67,9 +68,7 @@ function SalesStateEditor({ salesAtom, onDelete }: SalesStateEditorProps) {
 }
 
 export default function EODReport() {
-  const [atoms, setAtoms] = React.useState<PrimitiveAtom<SalesState>[]>([
-    createEODReportAtom(),
-  ]);
+  const [atoms, setAtoms] = useAtom(salesAtom);
   const [hrCount, setHrCount] = useAtom(handrollCountAtom);
   const [pettyCash, setPettyCash] = useAtom(pettyCashAtom);
 
