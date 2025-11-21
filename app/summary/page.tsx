@@ -9,15 +9,33 @@ import {
   createTotalAtom,
   safeQuantitiesAtom,
   safeRollsAtom,
+  salesAtom,
+  SalesState,
 } from "@/state/moneyAtoms";
-import { useAtom } from "jotai";
+import { PrimitiveAtom, useAtom } from "jotai";
 import Link from "next/link";
 import React from "react";
 
+function SingleSales({
+  salesAtom,
+  index,
+}: {
+  salesAtom: PrimitiveAtom<SalesState>;
+  index: number;
+}) {
+  const [sales] = useAtom(salesAtom);
+  return (
+    <p>
+      Cash read POS {index + 1}: {sales.cashReading}
+    </p>
+  );
+}
+
 export default function Home() {
-  const [hrCount, setHrCount] = useAtom(handrollCountAtom);
-  const [pettyCash, setPettyCash] = useAtom(pettyCashAtom);
-  const [tillQuantities, setTillQuantities] = useAtom(tillQuantitiesAtom);
+  const [hrCount] = useAtom(handrollCountAtom);
+  const [pettyCash] = useAtom(pettyCashAtom);
+  const [tillQuantities] = useAtom(tillQuantitiesAtom);
+  const [sales] = useAtom(salesAtom);
   const now = new Date();
   const dateString = now.toLocaleDateString("en-GB");
   const dayName = now.toLocaleString(undefined, { weekday: "short" });
@@ -53,17 +71,19 @@ export default function Home() {
                     <p>$</p>
                     <div className="w-13 flex-1">
                       {(tillQuantities[label] * value).toFixed(2)}
-
                     </div>
                   </div>
                 </div>
               ))}
             </div>
             <div>
-              <p>
-                Total POS Count: ${total}
-              </p>
+              <p>Total POS Count: ${total}</p>
             </div>
+          </div>
+          <div>
+            {sales.map((atom, index) => (
+              <SingleSales key={index} salesAtom={atom} index={index} />
+            ))}
           </div>
         </div>
         <Link href="/safe" passHref>
