@@ -34,7 +34,7 @@ function SingleSales({
 }
 
 export default function Home() {
-    const FLOAT = 1000;
+  const FLOAT = 1000;
   const [handRollCount] = useAtom(handrollCountAtom);
   const [wastage] = useAtom(wastageAtom);
   const [pettyCash] = useAtom(pettyCashAtom);
@@ -55,15 +55,15 @@ export default function Home() {
     []
   );
   const totalTillAtom = React.useMemo(
-    () =>
-      createTotalAtom(
-        [safeQuantitiesAtom, tillQuantitiesAtom],
-        denominations
-      ),
+    () => createTotalAtom([tillQuantitiesAtom], denominations),
     []
   );
   const [totalCash] = useAtom(totalCashAtom);
   const [totalTill] = useAtom(totalTillAtom);
+
+  const variance = totalCash - FLOAT - totalSales.totalCashReading;
+  const normalized = Math.abs(variance) < 0.005 ? 0 : variance;
+  const formattedVariance = normalized;
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans">
@@ -100,17 +100,17 @@ export default function Home() {
             ))}
           </div>
           <div>
-            <p>Net Sale: {totalSales.totalNetSales.toFixed(2)}</p>
-            <p>Gross Sale: {totalSales.totalGrossSales.toFixed(2)}</p>
-            <p>Cash Read: {totalSales.totalCashReading.toFixed(2)}</p>
-            <p>Cash to Bank: {(totalCash-FLOAT).toFixed(2)}</p>
-            <p>Variance: {((totalCash-FLOAT)-totalSales.totalCashReading).toFixed(2)}</p>
-            <p>Wastage: {wastage}</p>
-            <p>Hand Roll: {handRollCount}</p>
-            <p>Petty Cash: {pettyCash}</p>
+            <p>Net Sale: ${totalSales.totalNetSales.toFixed(2)}</p>
+            <p>Gross Sale: ${totalSales.totalGrossSales.toFixed(2)}</p>
+            <p>Cash Read: ${totalSales.totalCashReading.toFixed(2)}</p>
+            <p>Cash to Bank: ${(totalCash - FLOAT).toFixed(2)}</p>
+            <p>Variance: ${formattedVariance.toFixed(2)}</p>
+            <p>Wastage: ${wastage}</p>
+            <p>Hand Roll: ${handRollCount}</p>
+            <p>Petty Cash: ${pettyCash}</p>
           </div>
         </div>
-        <Link href="/safe" passHref>
+        <Link href="/" passHref>
           <Button variant="outline" size="lg">
             Next
           </Button>
