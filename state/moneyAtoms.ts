@@ -52,6 +52,7 @@ export const safeRollsAtom = atom<Record<string, number>>({});
 export const tillQuantitiesAtom = atom(initialTillQuantities);
 export const bankTakingQuantitiesAtom = atom<Record<string, number>>({});
 export const handrollCountAtom = atom<number>(0);
+export const wastageAtom = atom<number>(0);
 export const pettyCashAtom = atom<number>(0);
 export const salesAtom = atom<PrimitiveAtom<SalesState>[]>([
   createEODReportAtom(),

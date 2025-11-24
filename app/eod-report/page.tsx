@@ -9,6 +9,7 @@ import {
   handrollCountAtom,
   pettyCashAtom,
   salesAtom,
+  wastageAtom,
 } from "@/state/moneyAtoms";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -70,6 +71,7 @@ function SalesStateEditor({ salesAtom, onDelete }: SalesStateEditorProps) {
 export default function EODReport() {
   const [atoms, setAtoms] = useAtom(salesAtom);
   const [hrCount, setHrCount] = useAtom(handrollCountAtom);
+  const [wastage, setWastage] = useAtom(wastageAtom);
   const [pettyCash, setPettyCash] = useAtom(pettyCashAtom);
 
   const handleAdd = () => {
@@ -93,6 +95,15 @@ export default function EODReport() {
             type="number"
             value={hrCount || ""}
             onChange={(e) => setHrCount(Number(e.target.value) || 0)}
+            className="border p-1 ml-2 w-24"
+          />
+        </label>
+        <label>
+          Wastage:
+          <input
+            type="number"
+            value={wastage || ""}
+            onChange={(e) => setWastage(Number(e.target.value) || 0)}
             className="border p-1 ml-2 w-24"
           />
         </label>
