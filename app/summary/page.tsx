@@ -11,6 +11,8 @@ import {
   safeRollsAtom,
   salesAtom,
   SalesState,
+  wastageAtom,
+  totalSalesAtom,
 } from "@/state/moneyAtoms";
 import { PrimitiveAtom, useAtom } from "jotai";
 import Link from "next/link";
@@ -32,10 +34,13 @@ function SingleSales({
 }
 
 export default function Home() {
-  const [hrCount] = useAtom(handrollCountAtom);
+    const FLOAT = 1000;
+  const [handRollCount] = useAtom(handrollCountAtom);
+  const [wastage] = useAtom(wastageAtom);
   const [pettyCash] = useAtom(pettyCashAtom);
   const [tillQuantities] = useAtom(tillQuantitiesAtom);
   const [sales] = useAtom(salesAtom);
+  const [totalSales] = useAtom(totalSalesAtom);
   const now = new Date();
   const dateString = now.toLocaleDateString("en-GB");
   const dayName = now.toLocaleString(undefined, { weekday: "short" });
@@ -84,6 +89,16 @@ export default function Home() {
             {sales.map((atom, index) => (
               <SingleSales key={index} salesAtom={atom} index={index} />
             ))}
+          </div>
+          <div>
+            <p>Net Sale: {totalSales.totalNetSales}</p>
+            <p>Gross Sale: {totalSales.totalGrossSales}</p>
+            <p>Cash Read: {totalSales.totalCashReading}</p>
+            <p>Cash to Bank: {total-FLOAT}</p>
+            <p>Variance: {(total-FLOAT)-totalSales.totalCashReading}</p>
+            <p>Wastage: {wastage}</p>
+            <p>Hand Roll: {handRollCount}</p>
+            <p>Petty Cash: {pettyCash}</p>
           </div>
         </div>
         <Link href="/safe" passHref>
