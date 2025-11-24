@@ -20,8 +20,8 @@ export default function Takings() {
     () =>
       createTotalAtom(
         [safeQuantitiesAtom, tillQuantitiesAtom],
-        safeRollsAtom,
-        denominations
+        denominations,
+        safeRollsAtom
       ),
     []
   );

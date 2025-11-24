@@ -45,16 +45,25 @@ export default function Home() {
   const dateString = now.toLocaleDateString("en-GB");
   const dayName = now.toLocaleString(undefined, { weekday: "short" });
 
-  const totalAtom = React.useMemo(
+  const totalCashAtom = React.useMemo(
     () =>
       createTotalAtom(
         [safeQuantitiesAtom, tillQuantitiesAtom],
-        safeRollsAtom,
+        denominations,
+        safeRollsAtom
+      ),
+    []
+  );
+  const totalTillAtom = React.useMemo(
+    () =>
+      createTotalAtom(
+        [safeQuantitiesAtom, tillQuantitiesAtom],
         denominations
       ),
     []
   );
-  const [total] = useAtom(totalAtom);
+  const [totalCash] = useAtom(totalCashAtom);
+  const [totalTill] = useAtom(totalTillAtom);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans">
@@ -82,7 +91,7 @@ export default function Home() {
               ))}
             </div>
             <div>
-              <p>Total POS Count: ${total}</p>
+              <p>Total POS Count: ${totalTill.toFixed(2)}</p>
             </div>
           </div>
           <div>
@@ -91,11 +100,11 @@ export default function Home() {
             ))}
           </div>
           <div>
-            <p>Net Sale: {totalSales.totalNetSales}</p>
-            <p>Gross Sale: {totalSales.totalGrossSales}</p>
-            <p>Cash Read: {totalSales.totalCashReading}</p>
-            <p>Cash to Bank: {total-FLOAT}</p>
-            <p>Variance: {(total-FLOAT)-totalSales.totalCashReading}</p>
+            <p>Net Sale: {totalSales.totalNetSales.toFixed(2)}</p>
+            <p>Gross Sale: {totalSales.totalGrossSales.toFixed(2)}</p>
+            <p>Cash Read: {totalSales.totalCashReading.toFixed(2)}</p>
+            <p>Cash to Bank: {(totalCash-FLOAT).toFixed(2)}</p>
+            <p>Variance: {((totalCash-FLOAT)-totalSales.totalCashReading).toFixed(2)}</p>
             <p>Wastage: {wastage}</p>
             <p>Hand Roll: {handRollCount}</p>
             <p>Petty Cash: {pettyCash}</p>

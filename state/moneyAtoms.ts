@@ -14,8 +14,8 @@ const initialTillQuantities = denominations.reduce((acc, { label }) => {
 
 export const createTotalAtom = (
   quantitiesAtoms: PrimitiveAtom<Record<string, number>>[],
-  rollsAtom: PrimitiveAtom<Record<string, number>> | undefined,
-  denominations: { label: string; value: number; rollSize?: number }[]
+  denominations: { label: string; value: number; rollSize?: number }[],
+  rollsAtom?: PrimitiveAtom<Record<string, number>> | undefined
 ) =>
   atom((get) => {
     // Aggregate quantities from all quantity atoms by summing corresponding keys
