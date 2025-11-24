@@ -57,3 +57,17 @@ export const pettyCashAtom = atom<number>(0);
 export const salesAtom = atom<PrimitiveAtom<SalesState>[]>([
   createEODReportAtom(),
 ]);
+
+export const totalSales = atom((get) => {
+  const sales = get(salesAtom);
+  return sales.reduce(
+    (acc, saleAtom) => {
+      const sale = get(saleAtom);
+      acc.totalNetSales += sale.netSales;
+      acc.totalGrossSales += sale.grossSales;
+      acc.totalCashReading += sale.cashReading;
+      return acc;
+    },
+    { totalNetSales: 0, totalGrossSales: 0, totalCashReading: 0 }
+  );
+});
