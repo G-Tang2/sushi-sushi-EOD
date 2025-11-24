@@ -58,7 +58,7 @@ export const salesAtom = atom<PrimitiveAtom<SalesState>[]>([
   createEODReportAtom(),
 ]);
 
-export const totalSales = atom((get) => {
+export const totalSalesAtom = atom((get) => {
   const sales = get(salesAtom);
   return sales.reduce(
     (acc, saleAtom) => {
