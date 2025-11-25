@@ -131,3 +131,8 @@
 .no-spinner {
   -moz-appearance: textfield;
 }
+
+body, code, pre {
+  font-family: var(--font-poppins, sans-serif);
+}
+
