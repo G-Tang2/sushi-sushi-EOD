@@ -55,7 +55,7 @@ export default function RollMoneyCounter({
               min="0"
               value={rolls[label] || ""}
               onChange={(e) => handleChange(label, Number(e.target.value))}
-              className="no-spinner border p-1 w-16 text-center h-8 box-border leading-none"
+              className="no-spinner border p-1 w-14 text-center h-8 box-border leading-none"
               aria-label={`${label} rolls quantity`}
             />
             <button

@@ -32,17 +32,17 @@ export default function MoneyCounter({
   return (
     <div className="max-w-lg mx-auto p-4 space-y-4">
       {/* Header Row: aligned with columns */}
-      <div className="flex items-center mb-2 gap-4 font-semibold">
-        <div className="w-16 text-right pr-2">Denominations</div>
-        <div className="w-36 text-center">Loose</div>
-        <div className="w-36 text-center">{rollsAtom ? "Rolls" : ""}</div>
+      <div className="flex bg-custom-peach py-1 items-center mb-2 font-semibold">
+        <div className="w-10 mx-2"></div>
+        <div className="w-28 text-center mx-4">Loose</div>
+        <div className="w-28 text-center mx-4">{rollsAtom ? "Rolls" : ""}</div>
       </div>
 
       {/* Dynamic rows for each denomination */}
       {denominations.map(({ label, rollSize }) => (
-        <div key={label} className="flex items-center my-4 gap-4">
+        <div key={label} className="flex items-center my-4">
           {/* Denomination label */}
-          <div className="w-16 text-right pr-2">{label}</div>
+          <div className="w-10 text-right mx-2">{label}</div>
 
           {/* Loose counter */}
           <div className="w-36">
@@ -60,7 +60,7 @@ export default function MoneyCounter({
                 rollsAtom={rollsAtom}
               />
             ) : (
-              <div className="w-36" /> // Keep alignment with placeholder
+              <div className="w-32" /> // Keep alignment with placeholder
             )}
           </div>
         </div>

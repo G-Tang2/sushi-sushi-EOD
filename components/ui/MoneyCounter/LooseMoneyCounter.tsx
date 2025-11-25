@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { PrimitiveAtom, useAtom } from "jotai";
 
 interface Denomination {
@@ -55,7 +54,7 @@ export default function LooseMoneyCounter({
             min="0"
             value={quantities[label] || ""}
             onChange={(e) => handleChange(label, Number(e.target.value))}
-            className="no-spinner border p-1 w-16 text-center h-8 box-border leading-none"
+            className="no-spinner border p-1 w-14 text-center h-8 box-border leading-none"
             aria-label={`${label} loose quantity`}
           />
           <button
