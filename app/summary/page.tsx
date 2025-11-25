@@ -63,10 +63,12 @@ export default function Home() {
   const [totalTill] = useAtom(totalTillAtom);
 
   const variance = totalCash - FLOAT - totalSales.totalCashReading;
+  const displayedVariance = Math.abs(variance) < 0.01 ? 0 : variance;
+
   const formattedVariance = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
-  }).format(variance);
+  }).format(displayedVariance);
 
   return (
     <div className="flex min-h-screen items-center justify-center ">
