@@ -25,6 +25,12 @@ export default function Takings() {
       ),
     []
   );
+const totalTillAtom = React.useMemo(
+    () => createTotalAtom([tillQuantitiesAtom], denominations),
+    []
+  );
+
+  const [totalTill] = useAtom(totalTillAtom);
   const [total] = useAtom(totalAtom);
 
   return (
@@ -33,7 +39,7 @@ export default function Takings() {
         <h1 className="mb-8 text-4xl font-bold text-zinc-800">Bank Takings</h1>
         {/* Total value display */}
         <div className="mt-4 text-lg text-right">
-          Total POS count = ${total.toFixed(2)}
+          Total POS count = ${totalTill.toFixed(2)}
         </div>
         <div className="mt-4 text-lg text-right">
           Total cash to be banked: ${(total - FLOAT).toFixed(2)}

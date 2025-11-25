@@ -54,6 +54,7 @@ export default function Home() {
       ),
     []
   );
+
   const totalTillAtom = React.useMemo(
     () => createTotalAtom([tillQuantitiesAtom], denominations),
     []
