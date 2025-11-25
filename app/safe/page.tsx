@@ -11,13 +11,11 @@ export default function Safe() {
     <div className="flex min-h-screen items-center justify-center">
       <main className="flex min-h-screen w-full max-w-3xl flex-col items-center sm:items-start">
         <h1 className="my-8 text-4xl font-bold">Safe</h1>
-        <div className="flex-1">
-          <MoneyCounter
-            denominations={denominations}
-            quantitiesAtom={safeQuantitiesAtom}
-            rollsAtom={safeRollsAtom}
-          />
-        </div>
+        <MoneyCounter
+          denominations={denominations}
+          quantitiesAtom={safeQuantitiesAtom}
+          rollsAtom={safeRollsAtom}
+        />
         <Link href="/till" passHref>
           <Button size="lg" className="my-8">
             Next

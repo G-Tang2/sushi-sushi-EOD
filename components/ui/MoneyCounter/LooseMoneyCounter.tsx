@@ -40,8 +40,6 @@ export default function LooseMoneyCounter({
           key={label}
           className="flex items-center justify-center gap-1 w-36"
         >
-          {/* Note: Label rendered in parent component */}
-          {/* <div className="flex items-center gap-1 w-36 justify-center"> */}
           <button
             onClick={() => decrement(label)}
             className="px-2 py-1 bg-gray-200 rounded"
@@ -63,7 +61,6 @@ export default function LooseMoneyCounter({
           >
             +
           </button>
-          {/* </div> */}
         </div>
       ))}
     </>
