@@ -69,50 +69,50 @@ export default function Home() {
   }).format(variance);
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white sm:items-start">
-        <div className="flex flex-col items-center text-center">
-          <h1 className="mb-8 text-4xl font-bold text-zinc-800">Summary</h1>
-          <p className="mb-8 text-sm text-zinc-500">
-            {dateString} {dayName}
-          </p>
-          <div className="mb-4 text-lg text-right flex flex-col gap-6">
-            <div>
-              {denominations.map(({ label, value }) => (
-                <div key={label} className="flex items-center my-2 gap-2">
+    <div className="flex min-h-screen items-center justify-center ">
+      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center sm:items-start">
+        <h1 className="my-8 text-4xl font-bold">Summary</h1>
+        <p>
+          {dateString} {dayName}
+        </p>
+        <div className="bg-custom-cream rounded-2xl w-sm p-4 m-4 space-y-4">
+          <div className="flex flex-col justify-between items-center">
+            {Object.entries(tillQuantities).map(([label, value]) => {
+              const denom = denominations.find((d) => d.label === label);
+              const amount = denom ? denom.value * value : 0;
+
+              return (
+                <div key={label} className="flex items-center my-2 gap-2 ">
                   <div className="w-10">{label}</div>
                   <div>x</div>
                   <div className="w-8 text-right">{value}</div>
-                  <div>=</div>
+                  <div className="mx-2">=</div>
                   <div className="flex">
-                    <p>$</p>
-                    <div className="w-13 flex-1">
-                      {(tillQuantities[label] * value).toFixed(2)}
-                    </div>
+                    <p className="pr-1">$</p>
+                    <div className="w-12 text-right">{amount.toFixed(2)}</div>
                   </div>
                 </div>
-              ))}
-            </div>
-            <div>
-              <p>Total POS Count: ${totalTill.toFixed(2)}</p>
-            </div>
+              );
+            })}
           </div>
-          <div>
-            {sales.map((atom, index) => (
-              <SingleSales key={index} salesAtom={atom} index={index} />
-            ))}
-          </div>
-          <div>
-            <p>Total Cash Read: ${totalSales.totalCashReading.toFixed(2)}</p>
-            <p>Cash to Bank: ${(totalCash - FLOAT).toFixed(2)}</p>
-            <p>Variance: {formattedVariance}</p>
-            <p>Wastage: ${wastage.toFixed(2)}</p>
-            <p>Hand Roll: {handRollCount}</p>
-            <p>Petty Cash: ${pettyCash.toFixed(2)}</p>
-            <p>Net Sale: ${totalSales.totalNetSales.toFixed(2)}</p>
-            <p>Gross Sale: ${totalSales.totalGrossSales.toFixed(2)}</p>
-          </div>
+          <p className="justify-self-center font-semibold">Total POS Count: ${totalTill.toFixed(2)}</p>
         </div>
+        <div>
+          {sales.map((atom, index) => (
+            <SingleSales key={index} salesAtom={atom} index={index} />
+          ))}
+        </div>
+        <div>
+          <p>Total Cash Read: ${totalSales.totalCashReading.toFixed(2)}</p>
+          <p>Cash to Bank: ${(totalCash - FLOAT).toFixed(2)}</p>
+          <p>Variance: {formattedVariance}</p>
+          <p>Wastage: ${wastage.toFixed(2)}</p>
+          <p>Hand Roll: {handRollCount}</p>
+          <p>Petty Cash: ${pettyCash.toFixed(2)}</p>
+          <p>Net Sale: ${totalSales.totalNetSales.toFixed(2)}</p>
+          <p>Gross Sale: ${totalSales.totalGrossSales.toFixed(2)}</p>
+        </div>
+
         <Link href="/" passHref>
           <Button variant="outline" size="lg">
             Next
