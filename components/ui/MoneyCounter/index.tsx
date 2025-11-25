@@ -32,7 +32,7 @@ export default function MoneyCounter({
   return (
     <div className="bg-custom-cream rounded-2xl max-w-lg mx-auto p-4 space-y-4">
       {/* Header Row: aligned with columns */}
-      <div className="flex bg-custom-peach py-1 items-center mb-2 font-semibold">
+      <div className="flex text-white rounded-md bg-custom-peach py-1 items-center mb-2 font-semibold">
         <div className="w-10 mx-2"></div>
         <div className="w-28 text-center mx-4">Loose</div>
         <div className="w-28 text-center mx-4">{rollsAtom ? "Rolls" : ""}</div>
@@ -67,7 +67,7 @@ export default function MoneyCounter({
       ))}
 
       {/* Total value display */}
-      <div className="mt-4 font-semibold text-lg text-right">
+      <div className="mt-5 font-semibold text-lg text-center">
         Total: ${total.toFixed(2)}
       </div>
     </div>
