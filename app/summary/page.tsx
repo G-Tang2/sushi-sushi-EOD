@@ -62,8 +62,10 @@ export default function Home() {
   const [totalTill] = useAtom(totalTillAtom);
 
   const variance = totalCash - FLOAT - totalSales.totalCashReading;
-  const normalized = Math.abs(variance) < 0.005 ? 0 : variance;
-  const formattedVariance = normalized;
+  const formattedVariance = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(variance);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans">
@@ -100,14 +102,14 @@ export default function Home() {
             ))}
           </div>
           <div>
+            <p>Total Cash Read: ${totalSales.totalCashReading.toFixed(2)}</p>
+            <p>Cash to Bank: ${(totalCash - FLOAT).toFixed(2)}</p>
+            <p>Variance: {formattedVariance}</p>
+            <p>Wastage: ${wastage.toFixed(2)}</p>
+            <p>Hand Roll: {handRollCount}</p>
+            <p>Petty Cash: ${pettyCash.toFixed(2)}</p>
             <p>Net Sale: ${totalSales.totalNetSales.toFixed(2)}</p>
             <p>Gross Sale: ${totalSales.totalGrossSales.toFixed(2)}</p>
-            <p>Cash Read: ${totalSales.totalCashReading.toFixed(2)}</p>
-            <p>Cash to Bank: ${(totalCash - FLOAT).toFixed(2)}</p>
-            <p>Variance: ${formattedVariance.toFixed(2)}</p>
-            <p>Wastage: ${wastage}</p>
-            <p>Hand Roll: ${handRollCount}</p>
-            <p>Petty Cash: ${pettyCash}</p>
           </div>
         </div>
         <Link href="/" passHref>
