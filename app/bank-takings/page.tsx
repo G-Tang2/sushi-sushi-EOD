@@ -25,7 +25,7 @@ export default function Takings() {
       ),
     []
   );
-const totalTillAtom = React.useMemo(
+  const totalTillAtom = React.useMemo(
     () => createTotalAtom([tillQuantitiesAtom], denominations),
     []
   );

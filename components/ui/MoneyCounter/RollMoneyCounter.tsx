@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import { PrimitiveAtom, useAtom } from "jotai";
+import { Minus, Plus } from "lucide-react";
 
 interface Denomination {
   label: string;
@@ -45,10 +45,10 @@ export default function RollMoneyCounter({
           >
             <button
               onClick={() => decrement(label)}
-              className="px-2 py-1 bg-gray-200 rounded"
+              className="bg-gray-200 rounded h-8 w-8 flex items-center justify-center"
               disabled={!rolls[label] || rolls[label] <= 0}
             >
-              -
+              <Minus />
             </button>
             <input
               type="number"
@@ -60,9 +60,9 @@ export default function RollMoneyCounter({
             />
             <button
               onClick={() => increment(label)}
-              className="px-2 py-1 bg-gray-200 rounded"
+              className="bg-gray-200 rounded h-8 w-8 flex items-center justify-center"
             >
-              +
+              <Plus />
             </button>
           </div>
         ) : (

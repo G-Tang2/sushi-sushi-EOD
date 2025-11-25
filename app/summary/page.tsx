@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import { denominations } from "@/lib/denominations";
 import {
   tillQuantitiesAtom,
@@ -15,7 +15,7 @@ import {
   totalSalesAtom,
 } from "@/state/moneyAtoms";
 import { PrimitiveAtom, useAtom } from "jotai";
-import Link from "next/link";
+// import Link from "next/link";
 import React from "react";
 
 function SingleSales({
