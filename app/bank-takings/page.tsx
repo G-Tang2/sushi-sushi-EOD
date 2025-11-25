@@ -36,20 +36,18 @@ const totalTillAtom = React.useMemo(
   return (
     <div className="flex min-h-screen items-center justify-center ">
       <main className="flex min-h-screen w-full max-w-3xl flex-col items-center sm:items-start">
-        <h1 className="mb-8 text-4xl font-bold text-zinc-800">Bank Takings</h1>
+        <h1 className="my-8 text-4xl font-bold">Bank Takings</h1>
         {/* Total value display */}
-        <div className="mt-4 text-lg text-right">
-          Total POS count = ${totalTill.toFixed(2)}
-        </div>
-        <div className="mt-4 text-lg text-right">
-          Total cash to be banked: ${(total - FLOAT).toFixed(2)}
+        <div className="bg-custom-cream w-sm py-4 px-6 mb-2 rounded-2xl text-lg">
+          <p>Total POS count = ${totalTill.toFixed(2)}</p>
+          <p>Total cash to be banked: ${(total - FLOAT).toFixed(2)}</p>
         </div>
         <MoneyCounter
           denominations={denominations}
           quantitiesAtom={bankTakingQuantitiesAtom}
         />
         <Link href="/eod-report" passHref>
-          <Button variant="outline" size="lg" className="mb-8">
+          <Button size="lg" className="my-8">
             Next
           </Button>
         </Link>
