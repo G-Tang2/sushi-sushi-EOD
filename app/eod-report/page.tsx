@@ -84,8 +84,8 @@ export default function EODReport() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center bg-white sm:items-start">
+    <div className="flex min-h-screen items-center justify-center">
+      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center sm:items-start">
         <h1 className="mb-8 text-4xl font-bold text-zinc-800">
           End of Day Report
         </h1>
