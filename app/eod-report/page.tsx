@@ -15,13 +15,13 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 interface SalesStateEditorProps {
+  idx: number;
   salesAtom: PrimitiveAtom<SalesState>;
   onDelete: () => void;
 }
 
-function SalesStateEditor({ salesAtom, onDelete }: SalesStateEditorProps) {
+function SalesStateEditor({ idx, salesAtom, onDelete }: SalesStateEditorProps) {
   const [sales, setSales] = useAtom(salesAtom);
-
   return (
     <div className="flex order p-4 mb-4 space-y-2">
       <label>
@@ -57,13 +57,13 @@ function SalesStateEditor({ salesAtom, onDelete }: SalesStateEditorProps) {
           className="border p-1 ml-2 w-24"
         />
       </label>
-      <button
+      {idx != 0 ? <button
         onClick={onDelete}
         className="px-2 py-1 bg-red-600 text-white rounded"
         aria-label="Delete sales entry"
       >
         X
-      </button>
+      </button> : <></>}
     </div>
   );
 }
@@ -80,6 +80,7 @@ export default function EODReport() {
   };
 
   const handleDelete = (index: number) => {
+    console.log(index);
     setAtoms((prev) => prev.filter((_, i) => i !== index));
   };
 
@@ -126,6 +127,7 @@ export default function EODReport() {
           {atoms.map((atom, idx) => (
             <SalesStateEditor
               key={idx}
+              idx={idx}
               salesAtom={atom}
               onDelete={() => handleDelete(idx)}
             />
