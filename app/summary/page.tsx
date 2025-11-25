@@ -75,7 +75,7 @@ export default function Home() {
         <p className="font-medium text-lg">
           {dateString} {dayName}
         </p>
-        <div className="bg-custom-cream rounded-2xl w-sm p-4 m-4 space-y-4">
+        <div className="bg-slate-50 rounded-2xl w-sm p-4 m-4 space-y-4">
           <div className="flex flex-col justify-between items-center">
             {Object.entries(tillQuantities).map(([label, value]) => {
               const denom = denominations.find((d) => d.label === label);
@@ -99,7 +99,7 @@ export default function Home() {
             Total POS Count: ${totalTill.toFixed(2)}
           </p>
         </div>
-        <div className="bg-custom-cream rounded-2xl w-sm px-12 py-4 m-4 space-y-4">
+        <div className="bg-slate-50 rounded-2xl w-sm px-12 py-4 m-4 space-y-4">
           {sales.map((atom, index) => (
             <SingleSales key={index} salesAtom={atom} index={index} />
           ))}
@@ -119,7 +119,7 @@ export default function Home() {
             Wastage: <p>${wastage.toFixed(2)}</p>
           </div>
         </div>
-        <div className="bg-custom-cream rounded-2xl w-sm px-12 py-4 m-4 space-y-4">
+        <div className="bg-slate-50 rounded-2xl w-sm px-12 py-4 m-4 space-y-4">
           <div className="flex justify-between">
             Net Sale: <p>${totalSales.totalNetSales.toFixed(2)}</p>
           </div>

@@ -38,7 +38,7 @@ const totalTillAtom = React.useMemo(
       <main className="flex min-h-screen w-full max-w-3xl flex-col items-center sm:items-start">
         <h1 className="my-8 text-4xl font-bold">Bank Takings</h1>
         {/* Total value display */}
-        <div className="bg-custom-cream w-sm py-4 px-6 mb-2 rounded-2xl">
+        <div className="bg-slate-50 w-sm py-4 px-6 mb-2 rounded-2xl">
           <p>Total POS count = ${totalTill.toFixed(2)}</p>
           <p>Total cash to be banked: ${(total - FLOAT).toFixed(2)}</p>
         </div>

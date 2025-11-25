@@ -30,9 +30,9 @@ export default function MoneyCounter({
   const [total] = useAtom(totalAtom);
 
   return (
-    <div className="bg-custom-cream rounded-2xl w-sm p-4 space-y-4">
+    <div className="bg-slate-50 rounded-2xl w-sm p-4 space-y-4">
       {/* Header Row: aligned with columns */}
-      <div className="flex text-white rounded-md bg-custom-peach py-1 items-center mb-2 font-semibold">
+      <div className="flex text-white rounded-md bg-neutral-800 py-1 items-center mb-2 font-semibold">
         <div className="w-10 mx-2"></div>
         <div className="w-28 text-center mx-4">Loose</div>
         <div className="w-28 text-center mx-4">{rollsAtom ? "Rolls" : ""}</div>
