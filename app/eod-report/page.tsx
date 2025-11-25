@@ -23,8 +23,9 @@ interface SalesStateEditorProps {
 function SalesStateEditor({ idx, salesAtom, onDelete }: SalesStateEditorProps) {
   const [sales, setSales] = useAtom(salesAtom);
   return (
-    <div className="flex order p-4 mb-4 space-y-2">
-      <label>
+    <div className="flex flex-col order mb-4 space-y-2">
+      <p className="font-semibold">POS {idx + 1}</p>
+      <label className="justify-between flex items-center">
         Net Sales:
         <input
           type="number"
@@ -32,10 +33,10 @@ function SalesStateEditor({ idx, salesAtom, onDelete }: SalesStateEditorProps) {
           onChange={(e) =>
             setSales({ ...sales, netSales: Number(e.target.value) })
           }
-          className="border p-1 ml-2 w-24"
+          className="border p-1 w-24"
         />
       </label>
-      <label>
+      <label className="justify-between flex items-center">
         Gross Sales:
         <input
           type="number"
@@ -43,10 +44,10 @@ function SalesStateEditor({ idx, salesAtom, onDelete }: SalesStateEditorProps) {
           onChange={(e) =>
             setSales({ ...sales, grossSales: Number(e.target.value) })
           }
-          className="border p-1 ml-2 w-24"
+          className="border p-1 w-24"
         />
       </label>
-      <label>
+      <label className="justify-between flex items-center">
         Cash Reading:
         <input
           type="number"
@@ -54,16 +55,20 @@ function SalesStateEditor({ idx, salesAtom, onDelete }: SalesStateEditorProps) {
           onChange={(e) =>
             setSales({ ...sales, cashReading: Number(e.target.value) })
           }
-          className="border p-1 ml-2 w-24"
+          className="border p-1 w-24"
         />
       </label>
-      {idx != 0 ? <button
-        onClick={onDelete}
-        className="px-2 py-1 bg-red-600 text-white rounded"
-        aria-label="Delete sales entry"
-      >
-        X
-      </button> : <></>}
+      {idx != 0 ? (
+        <button
+          onClick={onDelete}
+          className="px-2 py-1 bg-red-600 text-white rounded"
+          aria-label="Delete sales entry"
+        >
+          X
+        </button>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
@@ -123,7 +128,7 @@ export default function EODReport() {
             </div>
           </label>
         </div>
-        <div>
+        <div className="flex flex-col gap-2 bg-custom-cream w-sm py-4 px-6 mb-2 rounded-2xl">
           {atoms.map((atom, idx) => (
             <SalesStateEditor
               key={idx}
