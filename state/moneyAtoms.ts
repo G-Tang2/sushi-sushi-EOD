@@ -1,5 +1,4 @@
 import { atom, PrimitiveAtom } from "jotai";
-import { atomWithStorage, createJSONStorage } from "jotai/utils";
 import { denominations } from "@/lib/denominations";
 
 export interface SalesState {
@@ -19,6 +18,7 @@ export const createTotalAtom = (
   rollsAtom?: PrimitiveAtom<Record<string, number>> | undefined
 ) =>
   atom((get) => {
+    // Aggregate quantities from all quantity atoms by summing corresponding keys
     const aggregatedQuantities = quantitiesAtoms.reduce((acc, qa) => {
       const quantities = get(qa);
       for (const label in quantities) {
@@ -47,50 +47,16 @@ export const createEODReportAtom = (
   });
 };
 
-// Use sessionStorage for persistence
-const storage = createJSONStorage(() => sessionStorage);
-
-export const safeQuantitiesAtom = atomWithStorage<Record<string, number>>(
-  "safeQuantitiesAtom",
-  {},
-  storage
-);
-export const safeRollsAtom = atomWithStorage<Record<string, number>>(
-  "safeRollsAtom",
-  {},
-  storage
-);
-export const tillQuantitiesAtom = atomWithStorage<Record<string, number>>(
-  "tillQuantitiesAtom",
-  initialTillQuantities,
-  storage
-);
-export const bankTakingQuantitiesAtom = atomWithStorage<Record<string, number>>(
-  "bankTakingQuantitiesAtom",
-  {},
-  storage
-);
-export const handrollCountAtom = atomWithStorage<number>(
-  "handrollCountAtom",
-  0,
-  storage
-);
-export const wastageAtom = atomWithStorage<number>(
-  "wastageAtom",
-  0,
-  storage
-);
-export const pettyCashAtom = atomWithStorage<number>(
-  "pettyCashAtom",
-  0,
-  storage
-);
-
-export const salesAtom = atomWithStorage<PrimitiveAtom<SalesState>[]>(
-  "salesAtom",
-  [createEODReportAtom()],
-  storage
-);
+export const safeQuantitiesAtom = atom<Record<string, number>>({});
+export const safeRollsAtom = atom<Record<string, number>>({});
+export const tillQuantitiesAtom = atom(initialTillQuantities);
+export const bankTakingQuantitiesAtom = atom<Record<string, number>>({});
+export const handrollCountAtom = atom<number>(0);
+export const wastageAtom = atom<number>(0);
+export const pettyCashAtom = atom<number>(0);
+export const salesAtom = atom<PrimitiveAtom<SalesState>[]>([
+  createEODReportAtom(),
+]);
 
 export const totalSalesAtom = atom((get) => {
   const sales = get(salesAtom);

@@ -30,7 +30,7 @@ export default function MoneyCounter({
   const [total] = useAtom(totalAtom);
 
   return (
-    <div className="max-w-lg mx-auto p-4 space-y-4">
+    <div className="bg-custom-cream rounded-2xl max-w-lg mx-auto p-4 space-y-4">
       {/* Header Row: aligned with columns */}
       <div className="flex bg-custom-peach py-1 items-center mb-2 font-semibold">
         <div className="w-10 mx-2"></div>

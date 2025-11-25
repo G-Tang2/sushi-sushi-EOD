@@ -28,7 +28,7 @@ function SingleSales({
   const [sales] = useAtom(salesAtom);
   return (
     <p>
-      Cash read POS {index + 1}: {sales.cashReading}
+      Cash read POS {index + 1}: ${sales.cashReading.toFixed(2)}
     </p>
   );
 }
