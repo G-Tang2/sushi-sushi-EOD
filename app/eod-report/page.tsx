@@ -149,9 +149,9 @@ export default function EODReport() {
 
           <button
             onClick={handleAdd}
-            className="mb-4 px-4 py-2 bg-blue-600 text-white rounded"
+            className="my-4 px-4 py-2 bg-blue-600 text-sm text-white rounded"
           >
-            +
+            Add POS Entry
           </button>
         </div>
         <Link href="/summary" passHref>
