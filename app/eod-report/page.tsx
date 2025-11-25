@@ -39,36 +39,38 @@ function SalesStateEditor({ idx, salesAtom, onDelete }: SalesStateEditorProps) {
       </div>
       <label className="justify-between flex items-center">
         Net Sales:
-        <input
+        <div>$<input
           type="number"
           value={sales.netSales || ""}
           onChange={(e) =>
             setSales({ ...sales, netSales: Number(e.target.value) })
           }
-          className="border p-1 w-24"
-        />
+          className="border p-1 ml-2 w-24"
+        /></div>
       </label>
       <label className="justify-between flex items-center">
         Gross Sales:
+        <div>
+          $
         <input
           type="number"
           value={sales.grossSales || ""}
           onChange={(e) =>
             setSales({ ...sales, grossSales: Number(e.target.value) })
           }
-          className="border p-1 w-24"
-        />
+          className="border p-1 ml-2 w-24"
+        /></div>
       </label>
       <label className="justify-between flex items-center">
         Cash Reading:
-        <input
+        <div>$<input
           type="number"
           value={sales.cashReading || ""}
           onChange={(e) =>
             setSales({ ...sales, cashReading: Number(e.target.value) })
           }
-          className="border p-1 w-24"
-        />
+          className="border p-1 ml-2 w-24"
+        /></div>
       </label>
     </div>
   );
