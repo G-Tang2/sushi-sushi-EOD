@@ -23,7 +23,7 @@ interface SalesStateEditorProps {
 function SalesStateEditor({ idx, salesAtom, onDelete }: SalesStateEditorProps) {
   const [sales, setSales] = useAtom(salesAtom);
   return (
-    <div className="flex flex-col order mb-4 space-y-2">
+    <div className="flex flex-col order mb-1 space-y-2">
       <p className="font-semibold">POS {idx + 1}</p>
       <label className="justify-between flex items-center">
         Net Sales:
@@ -130,13 +130,16 @@ export default function EODReport() {
         </div>
         <div className="flex flex-col gap-2 bg-custom-cream w-sm py-4 px-6 mb-2 rounded-2xl">
           {atoms.map((atom, idx) => (
-            <SalesStateEditor
-              key={idx}
-              idx={idx}
-              salesAtom={atom}
-              onDelete={() => handleDelete(idx)}
-            />
+            <React.Fragment key={idx}>
+              {idx !== 0 && <hr className="my-2 border-gray-600" />}
+              <SalesStateEditor
+                idx={idx}
+                salesAtom={atom}
+                onDelete={() => handleDelete(idx)}
+              />
+            </React.Fragment>
           ))}
+
           <button
             onClick={handleAdd}
             className="mb-4 px-4 py-2 bg-blue-600 text-white rounded"
@@ -145,7 +148,7 @@ export default function EODReport() {
           </button>
         </div>
         <Link href="/summary" passHref>
-          <Button variant="outline" size="lg" className="mb-8">
+          <Button size="lg" className="my-8">
             Next
           </Button>
         </Link>
