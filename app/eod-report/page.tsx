@@ -84,38 +84,44 @@ export default function EODReport() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
+    <div className="flex min-h-screen items-center justify-center ">
       <main className="flex min-h-screen w-full max-w-3xl flex-col items-center sm:items-start">
-        <h1 className="mb-8 text-4xl font-bold text-zinc-800">
-          End of Day Report
-        </h1>
-        <label>
-          Handroll Count:
-          <input
-            type="number"
-            value={hrCount || ""}
-            onChange={(e) => setHrCount(Number(e.target.value) || 0)}
-            className="border p-1 ml-2 w-24"
-          />
-        </label>
-        <label>
-          Wastage:
-          <input
-            type="number"
-            value={wastage || ""}
-            onChange={(e) => setWastage(Number(e.target.value) || 0)}
-            className="border p-1 ml-2 w-24"
-          />
-        </label>
-        <label>
-          Petty Cash:
-          <input
-            type="number"
-            value={pettyCash || ""}
-            onChange={(e) => setPettyCash(Number(e.target.value) || 0)}
-            className="border p-1 ml-2 w-24"
-          />
-        </label>
+        <h1 className="my-8 text-4xl font-bold">End of Day Report</h1>
+        <div className="flex flex-col gap-2 bg-custom-cream w-sm py-4 px-6 mb-2 rounded-2xl">
+          <label className="flex justify-between items-center">
+            Handroll Count:
+            <input
+              type="number"
+              value={hrCount || ""}
+              onChange={(e) => setHrCount(Number(e.target.value) || 0)}
+              className="border p-1 ml-2 w-24"
+            />
+          </label>
+          <label className="flex justify-between items-center">
+            Wastage:
+            <div>
+              $
+              <input
+                type="number"
+                value={wastage || ""}
+                onChange={(e) => setWastage(Number(e.target.value) || 0)}
+                className="border p-1 ml-2 w-24"
+              />
+            </div>
+          </label>
+          <label className="flex justify-between items-center">
+            Petty Cash:
+            <div>
+              $
+              <input
+                type="number"
+                value={pettyCash || ""}
+                onChange={(e) => setPettyCash(Number(e.target.value) || 0)}
+                className="border p-1 ml-2 w-24"
+              />
+            </div>
+          </label>
+        </div>
         <div>
           {atoms.map((atom, idx) => (
             <SalesStateEditor
