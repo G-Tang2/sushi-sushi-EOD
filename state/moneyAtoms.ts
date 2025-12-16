@@ -71,3 +71,14 @@ export const totalSalesAtom = atom((get) => {
     { totalNetSales: 0, totalGrossSales: 0, totalCashReading: 0 }
   );
 });
+
+export const safeValidAtom = atom<boolean>((get) => {
+  const safeTotalAtom = createTotalAtom(
+    [safeQuantitiesAtom],
+    denominations,
+    safeRollsAtom
+  );
+  const total = get(safeTotalAtom);
+
+  return total === 500;
+});

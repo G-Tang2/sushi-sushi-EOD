@@ -16,12 +16,14 @@ interface MoneyCounterProps {
   denominations: Denomination[];
   quantitiesAtom: PrimitiveAtom<Record<string, number>>;
   rollsAtom?: PrimitiveAtom<Record<string, number>> | undefined;
+  target?: number;
 }
 
 export default function MoneyCounter({
   denominations,
   quantitiesAtom,
   rollsAtom,
+  target,
 }: MoneyCounterProps) {
   const totalAtom = React.useMemo(
     () => createTotalAtom([quantitiesAtom], denominations, rollsAtom),
@@ -66,8 +68,13 @@ export default function MoneyCounter({
         </div>
       ))}
 
+      {target ? (
+        <div className="mt-5 mb-0 font-light text-sm text-center">
+          Target: ${target.toFixed(2)}
+        </div>
+      ) : null}
       {/* Total value display */}
-      <div className="mt-5 font-semibold text-lg text-center">
+      <div className="font-semibold text-lg text-center">
         Total: ${total.toFixed(2)}
       </div>
     </div>
