@@ -58,6 +58,7 @@ export const pettyCashAtom = atomWithStorage('pettyCash', <number>(0));
 export const salesAtom = atomWithStorage('sales',<PrimitiveAtom<SalesState>[]>([
   createEODReportAtom(),
 ]));
+export const reportInProgressAtom = atomWithStorage('reportInProgress', <boolean>(false));
 
 export const totalSalesAtom = atom((get) => {
   const sales = get(salesAtom);
