@@ -1,5 +1,6 @@
 import { atom, PrimitiveAtom } from "jotai";
 import { denominations } from "@/lib/denominations";
+import { atomWithStorage } from "jotai/utils";
 
 export interface SalesState {
   netSales: number;
@@ -47,16 +48,16 @@ export const createEODReportAtom = (
   });
 };
 
-export const safeQuantitiesAtom = atom<Record<string, number>>({});
-export const safeRollsAtom = atom<Record<string, number>>({});
-export const tillQuantitiesAtom = atom(initialTillQuantities);
-export const bankTakingQuantitiesAtom = atom<Record<string, number>>({});
-export const handrollCountAtom = atom<number>(0);
-export const wastageAtom = atom<number>(0);
-export const pettyCashAtom = atom<number>(0);
-export const salesAtom = atom<PrimitiveAtom<SalesState>[]>([
+export const safeQuantitiesAtom = atomWithStorage('safeQuantities', <Record<string, number>>({}));
+export const safeRollsAtom = atomWithStorage('safeRolls', <Record<string, number>>({}));
+export const tillQuantitiesAtom = atomWithStorage('tillQuantities', initialTillQuantities);
+export const bankTakingQuantitiesAtom = atomWithStorage('bankTakingQuantities', <Record<string, number>>({}));
+export const handrollCountAtom = atomWithStorage('handrollCount', <number>(0));
+export const wastageAtom = atomWithStorage('wastage', <number>(0));
+export const pettyCashAtom = atomWithStorage('pettyCash', <number>(0));
+export const salesAtom = atomWithStorage('sales',<PrimitiveAtom<SalesState>[]>([
   createEODReportAtom(),
-]);
+]));
 
 export const totalSalesAtom = atom((get) => {
   const sales = get(salesAtom);
