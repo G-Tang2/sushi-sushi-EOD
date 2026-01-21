@@ -10,8 +10,8 @@ export default function Home() {
   const resetMoneyCounters = useResetMoneyCounters();
 
   const handleStartNewReport = () => {
-    // resetMoneyCounters();
-    // setReportInProgress(true);
+    resetMoneyCounters();
+    setReportInProgress(true);
   };
 
   return (
