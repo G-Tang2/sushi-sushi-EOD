@@ -2,9 +2,8 @@
 
 import React from "react";
 import { useAtom } from "jotai";
-import { PrimitiveAtom } from "jotai";
 import {
-  createEODReportAtom,
+  createEODReportState,
   SalesState,
   handrollCountAtom,
   pettyCashAtom,
@@ -17,12 +16,17 @@ import { Trash2 } from "lucide-react";
 
 interface SalesStateEditorProps {
   idx: number;
-  salesAtom: PrimitiveAtom<SalesState>;
+  sales: SalesState;
+  onChange: (next: SalesState) => void;
   onDelete: () => void;
 }
 
-function SalesStateEditor({ idx, salesAtom, onDelete }: SalesStateEditorProps) {
-  const [sales, setSales] = useAtom(salesAtom);
+function SalesStateEditor({
+  idx,
+  sales,
+  onChange,
+  onDelete,
+}: SalesStateEditorProps) {
   return (
     <div className="flex flex-col order mb-1 space-y-2">
       <div className="flex items-center justify-between">
@@ -41,7 +45,7 @@ function SalesStateEditor({ idx, salesAtom, onDelete }: SalesStateEditorProps) {
             type="number"
             value={sales.netSales || ""}
             onChange={(e) =>
-              setSales({ ...sales, netSales: Number(e.target.value) })
+              onChange({ ...sales, netSales: Number(e.target.value) || 0 })
             }
             className="border p-1 ml-2 w-24"
           />
@@ -55,7 +59,7 @@ function SalesStateEditor({ idx, salesAtom, onDelete }: SalesStateEditorProps) {
             type="number"
             value={sales.grossSales || ""}
             onChange={(e) =>
-              setSales({ ...sales, grossSales: Number(e.target.value) })
+              onChange({ ...sales, grossSales: Number(e.target.value) || 0 })
             }
             className="border p-1 ml-2 w-24"
           />
@@ -69,7 +73,7 @@ function SalesStateEditor({ idx, salesAtom, onDelete }: SalesStateEditorProps) {
             type="number"
             value={sales.cashReading || ""}
             onChange={(e) =>
-              setSales({ ...sales, cashReading: Number(e.target.value) })
+              onChange({ ...sales, cashReading: Number(e.target.value) || 0 })
             }
             className="border p-1 ml-2 w-24"
           />
@@ -86,14 +90,18 @@ export default function EODReport() {
   const [pettyCash, setPettyCash] = useAtom(pettyCashAtom);
 
   const handleAdd = () => {
-    const newAtom = createEODReportAtom();
-    setAtoms((prev) => [...prev, newAtom]);
+    const newState = createEODReportState();
+    setAtoms((prev) => [...prev, newState]);
   };
 
   const handleDelete = (index: number) => {
     if (confirm("Are you sure you want to delete this sales entry?")) {
       setAtoms((prev) => prev.filter((_, i) => i !== index));
     }
+  };
+
+  const handleChange = (index: number, next: SalesState) => {
+    setAtoms((prev) => prev.map((s, i) => (i === index ? next : s)));
   };
 
   return (
@@ -141,7 +149,8 @@ export default function EODReport() {
               {idx !== 0 && <hr className="my-2 border-gray-600" />}
               <SalesStateEditor
                 idx={idx}
-                salesAtom={atom}
+                sales={atom}
+                onChange={(next) => handleChange(idx, next)}
                 onDelete={() => handleDelete(idx)}
               />
             </React.Fragment>

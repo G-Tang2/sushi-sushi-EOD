@@ -10,8 +10,8 @@ export default function Home() {
   const resetMoneyCounters = useResetMoneyCounters();
 
   const handleStartNewReport = () => {
-    resetMoneyCounters();
-    setReportInProgress(true);
+    // resetMoneyCounters();
+    // setReportInProgress(true);
   };
 
   return (
@@ -34,7 +34,9 @@ export default function Home() {
           {reportInProgress && (
             <div className="justify-center mt-4 flex">
               <Link href="/safe" passHref>
-                <Button size="lg" variant={"outline"}>Continue Report</Button>
+                <Button size="lg" variant={"outline"}>
+                  Continue Report
+                </Button>
               </Link>
             </div>
           )}

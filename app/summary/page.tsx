@@ -14,18 +14,11 @@ import {
   wastageAtom,
   totalSalesAtom,
 } from "@/state/moneyAtoms";
-import { PrimitiveAtom, useAtom } from "jotai";
+import { useAtom } from "jotai";
 // import Link from "next/link";
 import React from "react";
 
-function SingleSales({
-  salesAtom,
-  index,
-}: {
-  salesAtom: PrimitiveAtom<SalesState>;
-  index: number;
-}) {
-  const [sales] = useAtom(salesAtom);
+function SingleSales({ sales, index }: { sales: SalesState; index: number }) {
   return (
     <div className="flex justify-between">
       Cash read POS {index + 1}: <p>${sales.cashReading.toFixed(2)}</p>
@@ -50,14 +43,14 @@ export default function Home() {
       createTotalAtom(
         [safeQuantitiesAtom, tillQuantitiesAtom],
         denominations,
-        safeRollsAtom
+        safeRollsAtom,
       ),
-    []
+    [],
   );
 
   const totalTillAtom = React.useMemo(
     () => createTotalAtom([tillQuantitiesAtom], denominations),
-    []
+    [],
   );
   const [totalCash] = useAtom(totalCashAtom);
   const [totalTill] = useAtom(totalTillAtom);
@@ -103,7 +96,7 @@ export default function Home() {
         </div>
         <div className="bg-slate-50 rounded-2xl w-sm px-12 py-4 m-4 space-y-4">
           {sales.map((atom, index) => (
-            <SingleSales key={index} salesAtom={atom} index={index} />
+            <SingleSales key={index} sales={atom} index={index} />
           ))}
           <div className="flex justify-between">
             Total Cash Read: <p>${totalSales.totalCashReading.toFixed(2)}</p>

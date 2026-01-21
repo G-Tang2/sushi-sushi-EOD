@@ -1,7 +1,8 @@
 // hooks/useResetMoneyCounters.ts
 "use client";
 
-import { useResetAtom } from "jotai/utils";
+import { useSetAtom } from "jotai";
+import { RESET } from "jotai/utils";
 import {
   safeQuantitiesAtom,
   safeRollsAtom,
@@ -14,23 +15,23 @@ import {
 } from "@/state/moneyAtoms";
 
 export default function useResetMoneyCounters() {
-  const resetSafe = useResetAtom(safeQuantitiesAtom);
-  const resetRolls = useResetAtom(safeRollsAtom);
-  const resetTill = useResetAtom(tillQuantitiesAtom);
-  const resetBankTaking = useResetAtom(bankTakingQuantitiesAtom);
-  const resetHandrollCount = useResetAtom(handrollCountAtom);
-  const resetWastage = useResetAtom(wastageAtom);
-  const resetPettyCash = useResetAtom(pettyCashAtom);
-  const resetSales = useResetAtom(salesAtom);
+  const setSafe = useSetAtom(safeQuantitiesAtom);
+  const setRolls = useSetAtom(safeRollsAtom);
+  const setTill = useSetAtom(tillQuantitiesAtom);
+  const setBankTaking = useSetAtom(bankTakingQuantitiesAtom);
+  const setHandrollCount = useSetAtom(handrollCountAtom);
+  const setWastage = useSetAtom(wastageAtom);
+  const setPettyCash = useSetAtom(pettyCashAtom);
+  const setSales = useSetAtom(salesAtom);
 
   return () => {
-    resetSafe();
-    resetRolls();
-    resetTill();
-    resetBankTaking();
-    resetHandrollCount();
-    resetWastage();
-    resetPettyCash();
-    resetSales();
+    setSafe(RESET);
+    setRolls(RESET);
+    setTill(RESET);
+    setBankTaking(RESET);
+    setHandrollCount(RESET);
+    setWastage(RESET);
+    setPettyCash(RESET);
+    setSales(RESET);
   };
 }
