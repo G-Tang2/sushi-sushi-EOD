@@ -45,6 +45,7 @@ export default function Takings() {
         <MoneyCounter
           denominations={denominations}
           quantitiesAtom={bankTakingQuantitiesAtom}
+          target={total - FLOAT}
         />
         <Link href="/eod-report" passHref>
           <Button size="lg" className="my-8">
