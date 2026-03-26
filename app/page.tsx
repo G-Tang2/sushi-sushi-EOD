@@ -27,7 +27,7 @@ export default function Home() {
           <div className="justify-center mb-4 flex">
             <Link href="/safe" passHref>
               <Button size="lg" onClick={handleStartNewReport}>
-                Get Started
+                Create Report
               </Button>
             </Link>
           </div>
