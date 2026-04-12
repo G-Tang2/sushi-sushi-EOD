@@ -5,6 +5,7 @@ import {
   safeRollsAtom,
   tillQuantitiesAtom,
   bankTakingQuantitiesAtom,
+  totalFloatAtom,
 } from "@/state/moneyAtoms";
 import { denominations } from "@/lib/denominations";
 import { createTotalAtom } from "@/state/moneyAtoms";
@@ -15,7 +16,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export default function Takings() {
-  const FLOAT = 1000;
   const totalAtom = React.useMemo(
     () =>
       createTotalAtom(
@@ -30,8 +30,18 @@ export default function Takings() {
     []
   );
 
+  const bankTakingTotalAtom = React.useMemo(
+    () => createTotalAtom([bankTakingQuantitiesAtom], denominations),
+    []
+  );
+
   const [totalTill] = useAtom(totalTillAtom);
   const [total] = useAtom(totalAtom);
+  const [totalFloat] = useAtom(totalFloatAtom)
+  const [bankTakingTotal] = useAtom(bankTakingTotalAtom);
+  const bankTakingTarget = total - totalFloat;
+
+  const isValid = Math.round(bankTakingTotal * 100) / 100 === Math.round(bankTakingTarget * 100) / 100;
 
   return (
     <div className="flex min-h-screen items-center justify-center ">
@@ -40,15 +50,15 @@ export default function Takings() {
         {/* Total value display */}
         <div className="bg-slate-50 w-sm py-4 px-6 mb-2 rounded-2xl">
           <p>Total POS count = ${totalTill.toFixed(2)}</p>
-          <p>Total cash to be banked: ${(total - FLOAT).toFixed(2)}</p>
+          <p>Total cash to be banked: ${bankTakingTarget.toFixed(2)}</p>
         </div>
         <MoneyCounter
           denominations={denominations}
           quantitiesAtom={bankTakingQuantitiesAtom}
-          target={total - FLOAT}
+          target={bankTakingTarget}
         />
         <Link href="/eod-report" passHref>
-          <Button size="lg" className="my-8">
+          <Button size="lg" className="my-8" disabled={!isValid}>
             Next
           </Button>
         </Link>
