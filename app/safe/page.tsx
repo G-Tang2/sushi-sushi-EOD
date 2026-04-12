@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import MoneyCounter from "@/components/ui/MoneyCounter";
 import {
+  safeFloat,
   safeQuantitiesAtom,
   safeRollsAtom,
   safeValidAtom,
@@ -12,7 +13,6 @@ import { useAtomValue } from "jotai";
 import { useRouter } from "next/navigation";
 
 export default function Safe() {
-  const SAFE_FLOAT_AMOUNT = 500.0;
   const isValid = useAtomValue(safeValidAtom);
   const router = useRouter();
 
@@ -30,7 +30,7 @@ export default function Safe() {
           denominations={denominations}
           quantitiesAtom={safeQuantitiesAtom}
           rollsAtom={safeRollsAtom}
-          target={SAFE_FLOAT_AMOUNT}
+          target={safeFloat}
         />
         <Button
           size="lg"

@@ -2,9 +2,8 @@ import { atom, PrimitiveAtom } from "jotai";
 import { denominations } from "@/lib/denominations";
 import { atomWithStorage } from "jotai/utils";
 
-const SAFE_FLOAT_AMOUNT = 500.0;
-
-export const totalFloatAtom = atom(1000);
+export const safeFloat = 500.0;
+export const totalFloat = 1000;
 
 export interface SalesState {
   netSales: number;
@@ -106,5 +105,5 @@ export const safeValidAtom = atom<boolean>((get) => {
   );
   const total = get(safeTotalAtom);
 
-  return total === SAFE_FLOAT_AMOUNT;
+  return total === safeFloat;
 });
