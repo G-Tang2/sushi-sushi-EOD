@@ -4,7 +4,7 @@ import React from "react";
 import { PrimitiveAtom, useAtom } from "jotai";
 import LooseCounter from "./LooseMoneyCounter";
 import RollsCounter from "./RollMoneyCounter";
-import { createTotalAtom } from "@/state/moneyAtoms";
+import { createTotalAtom, tillQuantitiesAtom } from "@/state/moneyAtoms";
 
 interface Denomination {
   label: string;
@@ -17,6 +17,7 @@ interface MoneyCounterProps {
   quantitiesAtom: PrimitiveAtom<Record<string, number>>;
   rollsAtom?: PrimitiveAtom<Record<string, number>> | undefined;
   target?: number;
+  available?: boolean;
 }
 
 export default function MoneyCounter({
@@ -24,47 +25,53 @@ export default function MoneyCounter({
   quantitiesAtom,
   rollsAtom,
   target,
+  available,
 }: MoneyCounterProps) {
   const totalAtom = React.useMemo(
     () => createTotalAtom([quantitiesAtom], denominations, rollsAtom),
-    [quantitiesAtom, rollsAtom, denominations]
+    [quantitiesAtom, rollsAtom, denominations],
   );
   const [total] = useAtom(totalAtom);
+  const [tillQuantities] = useAtom(tillQuantitiesAtom);
 
   return (
     <div className="bg-slate-50 rounded-2xl w-sm p-4 space-y-4">
-      {/* Header Row: aligned with columns */}
+      {/* Header Row */}
       <div className="flex text-white rounded-md bg-neutral-800 py-1 items-center mb-2 font-semibold">
-        <div className="w-10 mx-2"></div>
-        <div className="w-28 text-center mx-4">Loose</div>
-        <div className="w-28 text-center mx-4">{rollsAtom ? "Rolls" : ""}</div>
+        <div className="w-14 shrink-0"></div>
+        <div className="w-36 shrink-0 text-center">Loose</div>
+        {rollsAtom && <div className="w-36 shrink-0 text-center">Rolls</div>}
+        {available && (
+          <div className="w-36 shrink-0 text-center">Available</div>
+        )}
       </div>
 
-      {/* Dynamic rows for each denomination */}
+      {/* Denomination rows */}
       {denominations.map(({ label, rollSize }) => (
         <div key={label} className="flex items-center my-4">
-          {/* Denomination label */}
-          <div className="w-10 text-right mx-2">{label}</div>
+          <div className="w-14 shrink-0 text-right pr-2">{label}</div>
 
-          {/* Loose counter */}
-          <div className="w-36">
+          <div className="w-36 shrink-0">
             <LooseCounter
               denominations={[{ label }]}
               quantitiesAtom={quantitiesAtom}
             />
           </div>
 
-          {/* Rolls counter or placeholder */}
-          <div className="w-36">
-            {rollsAtom ? (
+          {rollsAtom && (
+            <div className="w-36 shrink-0">
               <RollsCounter
                 denominations={[{ label, rollSize }]}
                 rollsAtom={rollsAtom}
               />
-            ) : (
-              <div className="w-32" /> // Keep alignment with placeholder
-            )}
-          </div>
+            </div>
+          )}
+
+          {available && (
+            <div className="w-36 shrink-0 text-center">
+              <div>{tillQuantities[label]}</div>
+            </div>
+          )}
         </div>
       ))}
 

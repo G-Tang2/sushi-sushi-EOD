@@ -65,6 +65,7 @@ export default function Takings() {
           denominations={denominations}
           quantitiesAtom={bankTakingQuantitiesAtom}
           target={bankTakingTarget}
+          available={true}
         />
         <Button
           size="lg"
