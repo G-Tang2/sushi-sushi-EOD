@@ -71,7 +71,7 @@ export default function Takings() {
         />
         <div className="my-8 flex flex-col items-center gap-2">
           {!bankTakingValid && (
-            <p className="text-red-500 text-sm">Exceeds till quantities.</p>
+            <p className="text-red-500 text-sm">Exceeds available quantities.</p>
           )}
           <Button
             size="lg"
