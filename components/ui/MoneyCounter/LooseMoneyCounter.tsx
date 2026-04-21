@@ -26,39 +26,35 @@ export default function LooseMoneyCounter({
     setQuantities((prev) => ({ ...prev, [label]: value }));
   };
 
-  const checkLimit = (label: string, delta: number) => {
+  const checkLimit = (label: string) => {
     if (limit === undefined) return true;
     const qty = quantities[label] || 0;
-    return qty + delta <= limit;
+    return qty <= limit;
   };
 
   const increment = (label: string) => {
-    if (checkLimit(label, 1)) {
-      setQuantities((prev) => ({ ...prev, [label]: (prev[label] || 0) + 1 }));
-    }
+    setQuantities((prev) => ({ ...prev, [label]: (prev[label] || 0) + 1 }));
   };
 
   const decrement = (label: string) => {
-    if (checkLimit(label, -1)) {
-      setQuantities((prev) => ({
-        ...prev,
-        [label]: Math.max((prev[label] || 0) - 1, 0),
-      }));
-    }
+    setQuantities((prev) => ({
+      ...prev,
+      [label]: Math.max((prev[label] || 0) - 1, 0),
+    }));
   };
 
-  const verifyLimits = () => {
-    if (limit === undefined) return;
-    for (const { label } of denominations) {
-      if ((quantities[label] || 0) > limit) {
-        setQuantities((prev) => ({ ...prev, [label]: limit }));
-      }
-    }
-  };
+  // const verifyLimits = () => {
+  //   if (limit === undefined) return;
+  //   for (const { label } of denominations) {
+  //     if ((quantities[label] || 0) > limit) {
+  //       setQuantities((prev) => ({ ...prev, [label]: limit }));
+  //     }
+  //   }
+  // };
 
-  useEffect(() => {
-    verifyLimits();
-  })
+  // useEffect(() => {
+  //   verifyLimits();
+  // })
 
   return (
     <>
@@ -79,12 +75,16 @@ export default function LooseMoneyCounter({
             min="0"
             value={quantities[label] || ""}
             onChange={(e) => handleChange(label, Number(e.target.value))}
-            className="no-spinner border p-1 w-14 text-center h-8 box-border leading-none"
+            className={`no-spinner border p-1 w-14 text-center h-8 box-border leading-none ${
+              checkLimit(label)
+              ? ""
+              : "border-red-500 bg-red-50 text-red-600"
+            }`}
             aria-label={`${label} loose quantity`}
           />
           <button
             onClick={() => increment(label)}
-            className="bg-gray-200 rounded h-8 w-8 flex items-center justify-center"
+            className="bg-gray-200 rounded h-8 w-8 flex items-center justify-center "
           >
             <Plus />
           </button>
