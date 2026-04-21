@@ -6,6 +6,7 @@ import {
   tillQuantitiesAtom,
   bankTakingQuantitiesAtom,
   totalFloat,
+  bankTakingValidAtom,
 } from "@/state/moneyAtoms";
 import { denominations } from "@/lib/denominations";
 import { createTotalAtom } from "@/state/moneyAtoms";
@@ -38,16 +39,17 @@ export default function Takings() {
 
   const [totalTill] = useAtom(totalTillAtom);
   const [total] = useAtom(totalAtom);
+  const [bankTakingValid] = useAtom(bankTakingValidAtom);
 
   const [bankTakingTotal] = useAtom(bankTakingTotalAtom);
   const bankTakingTarget = total - totalFloat;
 
-  const isValid =
+  const amountValid =
     Math.round(bankTakingTotal * 100) / 100 ===
     Math.round(bankTakingTarget * 100) / 100;
 
   const handleNext = () => {
-    if (isValid) {
+    if (amountValid) {
       router.push("/eod-report");
     }
   };
@@ -67,14 +69,18 @@ export default function Takings() {
           target={bankTakingTarget}
           limit={true}
         />
-        <Button
-          size="lg"
-          className="my-8"
-          disabled={!isValid}
-          onClick={handleNext}
-        >
-          Next
-        </Button>
+        <div className="my-8 flex flex-col items-center gap-2">
+          {!bankTakingValid && (
+            <p className="text-red-500 text-sm">Exceeds till quantities.</p>
+          )}
+          <Button
+            size="lg"
+            disabled={!bankTakingValid || !amountValid}
+            onClick={handleNext}
+          >
+            Next
+          </Button>
+        </div>
       </main>
     </div>
   );

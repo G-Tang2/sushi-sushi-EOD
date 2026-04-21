@@ -107,3 +107,11 @@ export const safeValidAtom = atom<boolean>((get) => {
 
   return total === safeFloat;
 });
+
+export const bankTakingValidAtom = atom((get) => {
+  const bankTaking = get(bankTakingQuantitiesAtom);
+  const till = get(tillQuantitiesAtom);
+  return denominations.every(
+    ({ label }) => (bankTaking[label] || 0) <= (till[label] || 0)
+  );
+});

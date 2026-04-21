@@ -2,7 +2,6 @@
 
 import { PrimitiveAtom, useAtom } from "jotai";
 import { Minus, Plus } from "lucide-react";
-import { useEffect } from "react";
 
 interface Denomination {
   label: string;
@@ -42,19 +41,6 @@ export default function LooseMoneyCounter({
       [label]: Math.max((prev[label] || 0) - 1, 0),
     }));
   };
-
-  // const verifyLimits = () => {
-  //   if (limit === undefined) return;
-  //   for (const { label } of denominations) {
-  //     if ((quantities[label] || 0) > limit) {
-  //       setQuantities((prev) => ({ ...prev, [label]: limit }));
-  //     }
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   verifyLimits();
-  // })
 
   return (
     <>
