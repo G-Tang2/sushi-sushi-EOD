@@ -77,7 +77,7 @@ export default function MoneyCounter({
       ))}
 
       {target ? (
-        <div className="mt-5 mb-0 font-light text-sm text-center">
+        <div className="mt-5 mb-0 text-sm text-center text-gray-600">
           Target: ${target.toFixed(2)}
         </div>
       ) : null}

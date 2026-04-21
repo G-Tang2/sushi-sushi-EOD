@@ -57,14 +57,15 @@ export default function LooseMoneyCounter({
             <Minus />
           </button>
           <input
-            type="number"
-            min="0"
+            type="text"
+            inputMode="numeric"
             value={quantities[label] || ""}
-            onChange={(e) => handleChange(label, Number(e.target.value))}
-            className={`no-spinner border p-1 w-14 text-center h-8 box-border leading-none ${
-              checkLimit(label)
-              ? ""
-              : "border-red-500 bg-red-50 text-red-600"
+            onChange={(e) => {
+              const cleaned = e.target.value.replace(/[^0-9]/g, "");
+              handleChange(label, cleaned === "" ? 0 : Number(cleaned));
+            }}
+            className={`border p-1 w-14 text-center h-8 box-border leading-none ${
+              checkLimit(label) ? "" : "border-red-500 bg-red-50 text-red-600"
             }`}
             aria-label={`${label} loose quantity`}
           />

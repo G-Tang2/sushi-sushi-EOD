@@ -51,10 +51,13 @@ export default function RollMoneyCounter({
               <Minus />
             </button>
             <input
-              type="number"
-              min="0"
+              type="text"
+              inputMode="numeric"
               value={rolls[label] || ""}
-              onChange={(e) => handleChange(label, Number(e.target.value))}
+              onChange={(e) => {
+                const cleaned = e.target.value.replace(/[^0-9]/g, "");
+                handleChange(label, cleaned === "" ? 0 : Number(cleaned));
+              }}
               className="no-spinner border p-1 w-14 text-center h-8 box-border leading-none"
               aria-label={`${label} rolls quantity`}
             />
@@ -67,7 +70,7 @@ export default function RollMoneyCounter({
           </div>
         ) : (
           <div key={label} className="w-36" /> // Space reserved for alignment (no rollSize)
-        )
+        ),
       )}
     </>
   );
