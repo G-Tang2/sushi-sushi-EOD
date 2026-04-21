@@ -17,7 +17,7 @@ interface MoneyCounterProps {
   quantitiesAtom: PrimitiveAtom<Record<string, number>>;
   rollsAtom?: PrimitiveAtom<Record<string, number>> | undefined;
   target?: number;
-  available?: boolean;
+  limit?: boolean;
 }
 
 export default function MoneyCounter({
@@ -25,7 +25,7 @@ export default function MoneyCounter({
   quantitiesAtom,
   rollsAtom,
   target,
-  available,
+  limit,
 }: MoneyCounterProps) {
   const totalAtom = React.useMemo(
     () => createTotalAtom([quantitiesAtom], denominations, rollsAtom),
@@ -41,7 +41,7 @@ export default function MoneyCounter({
         <div className="w-14 shrink-0"></div>
         <div className="w-36 shrink-0 text-center">Loose</div>
         {rollsAtom && <div className="w-36 shrink-0 text-center">Rolls</div>}
-        {available && (
+        {limit && (
           <div className="w-36 shrink-0 text-center">Available</div>
         )}
       </div>
@@ -55,6 +55,7 @@ export default function MoneyCounter({
             <LooseCounter
               denominations={[{ label }]}
               quantitiesAtom={quantitiesAtom}
+              limit={limit ? tillQuantities[label] : 999}
             />
           </div>
 
@@ -67,7 +68,7 @@ export default function MoneyCounter({
             </div>
           )}
 
-          {available && (
+          {limit && (
             <div className="w-36 shrink-0 text-center">
               <div>{tillQuantities[label]}</div>
             </div>

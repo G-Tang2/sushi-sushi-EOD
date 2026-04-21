@@ -2,6 +2,7 @@
 
 import { PrimitiveAtom, useAtom } from "jotai";
 import { Minus, Plus } from "lucide-react";
+import { useEffect } from "react";
 
 interface Denomination {
   label: string;
@@ -10,11 +11,13 @@ interface Denomination {
 interface LooseCounterProps {
   denominations: Denomination[];
   quantitiesAtom: PrimitiveAtom<Record<string, number>>;
+  limit?: number;
 }
 
 export default function LooseMoneyCounter({
   denominations,
   quantitiesAtom,
+  limit,
 }: LooseCounterProps) {
   const [quantities, setQuantities] = useAtom(quantitiesAtom);
 
@@ -23,16 +26,39 @@ export default function LooseMoneyCounter({
     setQuantities((prev) => ({ ...prev, [label]: value }));
   };
 
+  const checkLimit = (label: string, delta: number) => {
+    if (limit === undefined) return true;
+    const qty = quantities[label] || 0;
+    return qty + delta <= limit;
+  };
+
   const increment = (label: string) => {
-    setQuantities((prev) => ({ ...prev, [label]: (prev[label] || 0) + 1 }));
+    if (checkLimit(label, 1)) {
+      setQuantities((prev) => ({ ...prev, [label]: (prev[label] || 0) + 1 }));
+    }
   };
 
   const decrement = (label: string) => {
-    setQuantities((prev) => ({
-      ...prev,
-      [label]: Math.max((prev[label] || 0) - 1, 0),
-    }));
+    if (checkLimit(label, -1)) {
+      setQuantities((prev) => ({
+        ...prev,
+        [label]: Math.max((prev[label] || 0) - 1, 0),
+      }));
+    }
   };
+
+  const verifyLimits = () => {
+    if (limit === undefined) return;
+    for (const { label } of denominations) {
+      if ((quantities[label] || 0) > limit) {
+        setQuantities((prev) => ({ ...prev, [label]: limit }));
+      }
+    }
+  };
+
+  useEffect(() => {
+    verifyLimits();
+  })
 
   return (
     <>
