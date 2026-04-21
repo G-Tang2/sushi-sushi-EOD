@@ -3,10 +3,30 @@
 import { Button } from "@/components/ui/button";
 import MoneyCounter from "@/components/ui/MoneyCounter";
 import Link from "next/link";
-import { tillQuantitiesAtom } from "@/state/moneyAtoms";
+import { createTotalAtom, tillQuantitiesAtom } from "@/state/moneyAtoms";
 import { denominations } from "@/lib/denominations";
+import React from "react";
+import router from "next/router";
+import { useAtom } from "jotai";
 
 export default function Till() {
+  const totalTillAtom = React.useMemo(
+    () => createTotalAtom([tillQuantitiesAtom], denominations),
+    [],
+  );
+
+  const [totalTill] = useAtom(totalTillAtom);
+
+  const handleNext = () => {
+    if (totalTill < 500) {
+      alert(
+        "The total in the till should be at least $500. Please recount and adjust the quantities.",
+      );
+    } else {
+      router.push("/bank-takings");
+    }
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center">
       <main className="flex min-h-screen w-full max-w-3xl flex-col items-center \\ sm:items-start">
@@ -15,11 +35,9 @@ export default function Till() {
           denominations={denominations}
           quantitiesAtom={tillQuantitiesAtom}
         />
-        <Link href="/bank-takings" passHref>
-          <Button size="lg" className="my-8">
-            Next
-          </Button>
-        </Link>
+        <Button size="lg" className="my-8" onClick={handleNext}>
+          Next
+        </Button>
       </main>
     </div>
   );
