@@ -2,14 +2,14 @@
 
 import { Button } from "@/components/ui/button";
 import MoneyCounter from "@/components/ui/MoneyCounter";
-import Link from "next/link";
 import { createTotalAtom, tillQuantitiesAtom } from "@/state/moneyAtoms";
 import { denominations } from "@/lib/denominations";
 import React from "react";
-import router from "next/router";
 import { useAtom } from "jotai";
+import { useRouter } from "next/navigation";
 
 export default function Till() {
+  const router = useRouter();
   const totalTillAtom = React.useMemo(
     () => createTotalAtom([tillQuantitiesAtom], denominations),
     [],
