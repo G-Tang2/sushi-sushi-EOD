@@ -21,7 +21,7 @@ import React from "react";
 function SingleSales({ sales, index }: { sales: SalesState; index: number }) {
   return (
     <div className="flex justify-between">
-      Cash read POS {index + 1}: <p>${parseFloat(sales.cashReading) || 0}</p>
+      Cash read POS {index + 1}: <p>${isNaN(parseFloat(sales.cashReading)) ? 0 : parseFloat(sales.cashReading).toFixed(2)}</p>
     </div>
   );
 }
