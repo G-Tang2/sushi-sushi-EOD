@@ -42,11 +42,13 @@ function SalesStateEditor({
         <div>
           $
           <input
-            type="number"
+            type="text"
+            inputMode="numeric"
             value={sales.netSales || ""}
-            onChange={(e) =>
-              onChange({ ...sales, netSales: Number(e.target.value) || 0 })
-            }
+            onChange={(e) => {
+              const cleaned = e.target.value.replace(/[^0-9]/g, "");
+              onChange({ ...sales, netSales: cleaned === "" ? 0 :Number(cleaned)})
+            }}
             className="border p-1 ml-2 w-24"
           />
         </div>
@@ -56,11 +58,13 @@ function SalesStateEditor({
         <div>
           $
           <input
-            type="number"
+            type="text"
+            inputMode="numeric"
             value={sales.grossSales || ""}
-            onChange={(e) =>
-              onChange({ ...sales, grossSales: Number(e.target.value) || 0 })
-            }
+            onChange={(e) => {
+              const cleaned = e.target.value.replace(/[^0-9]/g, "");
+              onChange({ ...sales, grossSales: cleaned === "" ? 0 : Number(cleaned) })
+            }}
             className="border p-1 ml-2 w-24"
           />
         </div>
@@ -70,11 +74,13 @@ function SalesStateEditor({
         <div>
           $
           <input
-            type="number"
+            type="text"
+            inputMode="numeric"
             value={sales.cashReading || ""}
-            onChange={(e) =>
-              onChange({ ...sales, cashReading: Number(e.target.value) || 0 })
-            }
+            onChange={(e) => {
+              const cleaned = e.target.value.replace(/[^0-9]/g, "");
+              onChange({ ...sales, cashReading: cleaned === "" ? 0 : Number(cleaned) })
+            }}
             className="border p-1 ml-2 w-24"
           />
         </div>
@@ -112,9 +118,13 @@ export default function EODReport() {
           <label className="flex justify-between items-center">
             Handroll Count:
             <input
-              type="number"
+              type="text"
+            inputMode="numeric"
               value={hrCount || ""}
-              onChange={(e) => setHrCount(Number(e.target.value) || 0)}
+              onChange={(e) => {
+                const cleaned = e.target.value.replace(/[^0-9]/g, "");
+                setHrCount(cleaned === "" ? 0 : Number(cleaned));
+              }}
               className="border p-1 ml-2 w-24"
             />
           </label>
@@ -123,9 +133,13 @@ export default function EODReport() {
             <div>
               $
               <input
-                type="number"
+                type="text"
+                inputMode="numeric"
                 value={wastage || ""}
-                onChange={(e) => setWastage(Number(e.target.value) || 0)}
+                onChange={(e) => {
+                  const cleaned = e.target.value.replace(/[^0-9]/g, "");
+                  setWastage(cleaned === "" ? 0 : Number(cleaned));
+                }}
                 className="border p-1 ml-2 w-24"
               />
             </div>
@@ -135,9 +149,13 @@ export default function EODReport() {
             <div>
               $
               <input
-                type="number"
+                type="text"
+                inputMode="numeric"
                 value={pettyCash || ""}
-                onChange={(e) => setPettyCash(Number(e.target.value) || 0)}
+                onChange={(e) => {
+                  const cleaned = e.target.value.replace(/[^0-9]/g, "");
+                  setPettyCash(cleaned === "" ? 0 : Number(cleaned));
+                }}
                 className="border p-1 ml-2 w-24"
               />
             </div>
