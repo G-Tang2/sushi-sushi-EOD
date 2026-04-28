@@ -6,9 +6,9 @@ export const safeFloat = 500.0;
 export const totalFloat = 1000;
 
 export interface SalesState {
-  netSales: number;
-  grossSales: number;
-  cashReading: number;
+  netSales: string;
+  grossSales: string;
+  cashReading: string;
 }
 
 const initialTillQuantities = denominations.reduce(
@@ -51,9 +51,9 @@ export const createEODReportState = (
   initial?: Partial<SalesState>,
 ): SalesState => {
   return {
-    netSales: initial?.netSales || 0,
-    grossSales: initial?.grossSales || 0,
-    cashReading: initial?.cashReading || 0,
+    netSales: initial?.netSales || "",
+    grossSales: initial?.grossSales || "",
+    cashReading: initial?.cashReading || "",
   };
 };
 
@@ -73,9 +73,9 @@ export const bankTakingQuantitiesAtom = atomWithStorage(
   "bankTakingQuantities",
   <Record<string, number>>{},
 );
-export const handrollCountAtom = atomWithStorage("handrollCount", <number>0);
-export const wastageAtom = atomWithStorage("wastage", <number>0);
-export const pettyCashAtom = atomWithStorage("pettyCash", <number>0);
+export const handrollCountAtom = atomWithStorage("handrollCount", <string>"");
+export const wastageAtom = atomWithStorage("wastage", <string>"");
+export const pettyCashAtom = atomWithStorage("pettyCash", <string>"");
 export const salesAtom = atomWithStorage("sales", <SalesState[]>[
   createEODReportState(),
 ]);
@@ -88,9 +88,9 @@ export const totalSalesAtom = atom((get) => {
   const sales = get(salesAtom);
   return sales.reduce(
     (acc, sale) => {
-      acc.totalNetSales += sale.netSales;
-      acc.totalGrossSales += sale.grossSales;
-      acc.totalCashReading += sale.cashReading;
+      acc.totalNetSales += parseFloat(sale.netSales) || 0;
+      acc.totalGrossSales += parseFloat(sale.grossSales) || 0;
+      acc.totalCashReading += parseFloat(sale.cashReading) || 0;
       return acc;
     },
     { totalNetSales: 0, totalGrossSales: 0, totalCashReading: 0 },
@@ -112,6 +112,6 @@ export const bankTakingValidAtom = atom((get) => {
   const bankTaking = get(bankTakingQuantitiesAtom);
   const till = get(tillQuantitiesAtom);
   return denominations.every(
-    ({ label }) => (bankTaking[label] || 0) <= (till[label] || 0)
+    ({ label }) => (bankTaking[label] || 0) <= (till[label] || 0),
   );
 });

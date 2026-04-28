@@ -43,14 +43,16 @@ function SalesStateEditor({
           $
           <input
             type="text"
-            inputMode="numeric"
+            inputMode="decimal"
             value={sales.netSales || ""}
             onChange={(e) => {
-              const cleaned = e.target.value.replace(/[^0-9]/g, "");
-              onChange({
-                ...sales,
-                netSales: cleaned === "" ? 0 : Number(cleaned),
-              });
+              const value = e.target.value;
+              if (/^\d*\.?\d{0,2}$/.test(value)) {
+                onChange({
+                  ...sales,
+                  netSales: value,
+                });
+              }
             }}
             className="border p-1 ml-2 w-24"
           />
@@ -62,14 +64,16 @@ function SalesStateEditor({
           $
           <input
             type="text"
-            inputMode="numeric"
+            inputMode="decimal"
             value={sales.grossSales || ""}
             onChange={(e) => {
-              const cleaned = e.target.value.replace(/[^0-9]/g, "");
-              onChange({
-                ...sales,
-                grossSales: cleaned === "" ? 0 : Number(cleaned),
-              });
+              const value = e.target.value;
+              if (/^\d*\.?\d{0,2}$/.test(value)) {
+                onChange({
+                  ...sales,
+                  grossSales: value,
+                });
+              }
             }}
             className="border p-1 ml-2 w-24"
           />
@@ -81,14 +85,17 @@ function SalesStateEditor({
           $
           <input
             type="text"
-            inputMode="numeric"
-            value={sales.cashReading || ""}
+            inputMode="decimal"
+            value={sales.cashReading ?? ""}
             onChange={(e) => {
-              const cleaned = e.target.value.replace(/[^0-9]/g, "");
-              onChange({
-                ...sales,
-                cashReading: cleaned === "" ? 0 : Number(cleaned),
-              });
+              const value = e.target.value;
+              // digits, optional one dot, max 2 decimals
+              if (/^\d*\.?\d{0,2}$/.test(value)) {
+                onChange({
+                  ...sales,
+                  cashReading: value,
+                });
+              }
             }}
             className="border p-1 ml-2 w-24"
           />
@@ -132,7 +139,7 @@ export default function EODReport() {
               value={hrCount || ""}
               onChange={(e) => {
                 const cleaned = e.target.value.replace(/[^0-9]/g, "");
-                setHrCount(cleaned === "" ? 0 : Number(cleaned));
+                setHrCount(cleaned);
               }}
               className="border p-1 ml-2 w-24"
             />
@@ -143,11 +150,14 @@ export default function EODReport() {
               $
               <input
                 type="text"
-                inputMode="numeric"
+                inputMode="decimal"
                 value={wastage || ""}
                 onChange={(e) => {
-                  const cleaned = e.target.value.replace(/[^0-9]/g, "");
-                  setWastage(cleaned === "" ? 0 : Number(cleaned));
+                  const value = e.target.value;
+                  // digits, optional one dot, max 2 decimals
+                  if (/^\d*\.?\d{0,2}$/.test(value)) {
+                    setWastage(value);
+                  }
                 }}
                 className="border p-1 ml-2 w-24"
               />
@@ -159,11 +169,14 @@ export default function EODReport() {
               $
               <input
                 type="text"
-                inputMode="numeric"
+                inputMode="decimal"
                 value={pettyCash || ""}
                 onChange={(e) => {
-                  const cleaned = e.target.value.replace(/[^0-9]/g, "");
-                  setPettyCash(cleaned === "" ? 0 : Number(cleaned));
+                  const value = e.target.value;
+                  // digits, optional one dot, max 2 decimals
+                  if (/^\d*\.?\d{0,2}$/.test(value)) {
+                    setPettyCash(value);
+                  }
                 }}
                 className="border p-1 ml-2 w-24"
               />

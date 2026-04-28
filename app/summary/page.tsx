@@ -21,7 +21,7 @@ import React from "react";
 function SingleSales({ sales, index }: { sales: SalesState; index: number }) {
   return (
     <div className="flex justify-between">
-      Cash read POS {index + 1}: <p>${sales.cashReading.toFixed(2)}</p>
+      Cash read POS {index + 1}: <p>${parseFloat(sales.cashReading) || 0}</p>
     </div>
   );
 }
@@ -99,30 +99,32 @@ export default function Home() {
             <SingleSales key={index} sales={atom} index={index} />
           ))}
           <div className="flex justify-between">
-            Total Cash Read: <p>${totalSales.totalCashReading.toFixed(2)}</p>
+            Total Cash Read:{" "}
+            <p>${totalSales.totalCashReading.toFixed(2) || "0.00"}</p>
           </div>
           <div className="flex justify-between">
-            Cash to Bank: <p>${(totalCash - FLOAT).toFixed(2)}</p>
+            Cash to Bank: <p>${(totalCash - FLOAT).toFixed(2) || "0.00"}</p>
           </div>
           <div className="flex justify-between">
-            Petty Cash: <p>${pettyCash.toFixed(2)}</p>
+            Petty Cash: <p>${parseFloat(pettyCash) || "0.00"}</p>
           </div>
           <div className="flex justify-between">
             Variance: <p>{formattedVariance}</p>
           </div>
           <div className="flex justify-between">
-            Wastage: <p>${wastage.toFixed(2)}</p>
+            Wastage: <p>${parseFloat(wastage) || "0.00"}</p>
           </div>
         </div>
         <div className="bg-slate-50 rounded-2xl w-sm px-12 py-4 m-4 space-y-4">
           <div className="flex justify-between">
-            Net Sale: <p>${totalSales.totalNetSales.toFixed(2)}</p>
+            Net Sale: <p>${totalSales.totalNetSales.toFixed(2) || "0.00"}</p>
           </div>
           <div className="flex justify-between">
-            Gross Sale: <p>${totalSales.totalGrossSales.toFixed(2)}</p>
+            Gross Sale:{" "}
+            <p>${totalSales.totalGrossSales.toFixed(2) || "0.00"}</p>
           </div>
           <div className="flex justify-between">
-            Hand Roll: <p>{handRollCount}</p>
+            Hand Roll: <p>{handRollCount || "0"}</p>
           </div>
         </div>
 
