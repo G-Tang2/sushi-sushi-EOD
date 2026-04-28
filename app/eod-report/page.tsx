@@ -47,7 +47,10 @@ function SalesStateEditor({
             value={sales.netSales || ""}
             onChange={(e) => {
               const cleaned = e.target.value.replace(/[^0-9]/g, "");
-              onChange({ ...sales, netSales: cleaned === "" ? 0 :Number(cleaned)})
+              onChange({
+                ...sales,
+                netSales: cleaned === "" ? 0 : Number(cleaned),
+              });
             }}
             className="border p-1 ml-2 w-24"
           />
@@ -63,7 +66,10 @@ function SalesStateEditor({
             value={sales.grossSales || ""}
             onChange={(e) => {
               const cleaned = e.target.value.replace(/[^0-9]/g, "");
-              onChange({ ...sales, grossSales: cleaned === "" ? 0 : Number(cleaned) })
+              onChange({
+                ...sales,
+                grossSales: cleaned === "" ? 0 : Number(cleaned),
+              });
             }}
             className="border p-1 ml-2 w-24"
           />
@@ -79,7 +85,10 @@ function SalesStateEditor({
             value={sales.cashReading || ""}
             onChange={(e) => {
               const cleaned = e.target.value.replace(/[^0-9]/g, "");
-              onChange({ ...sales, cashReading: cleaned === "" ? 0 : Number(cleaned) })
+              onChange({
+                ...sales,
+                cashReading: cleaned === "" ? 0 : Number(cleaned),
+              });
             }}
             className="border p-1 ml-2 w-24"
           />
@@ -119,7 +128,7 @@ export default function EODReport() {
             Handroll Count:
             <input
               type="text"
-            inputMode="numeric"
+              inputMode="numeric"
               value={hrCount || ""}
               onChange={(e) => {
                 const cleaned = e.target.value.replace(/[^0-9]/g, "");
