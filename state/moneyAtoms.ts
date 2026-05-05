@@ -3,7 +3,7 @@ import { denominations } from "@/lib/denominations";
 import { atomWithStorage } from "jotai/utils";
 
 export const safeFloat = 500.0;
-export const totalFloat = 1000;
+export const totalFloat = 1000.0;
 
 export interface SalesState {
   netSales: string;

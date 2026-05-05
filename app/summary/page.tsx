@@ -1,5 +1,7 @@
 "use client";
 
+import SaveButton from "@/components/saveButton";
+import { Button } from "@/components/ui/button";
 // import { Button } from "@/components/ui/button";
 import { denominations } from "@/lib/denominations";
 import {
@@ -13,6 +15,7 @@ import {
   SalesState,
   wastageAtom,
   totalSalesAtom,
+  totalFloat,
 } from "@/state/moneyAtoms";
 import { useAtom } from "jotai";
 // import Link from "next/link";
@@ -21,13 +24,18 @@ import React from "react";
 function SingleSales({ sales, index }: { sales: SalesState; index: number }) {
   return (
     <div className="flex justify-between">
-      Cash read POS {index + 1}: <p>${isNaN(parseFloat(sales.cashReading)) ? 0 : parseFloat(sales.cashReading).toFixed(2)}</p>
+      Cash read POS {index + 1}:{" "}
+      <p>
+        $
+        {isNaN(parseFloat(sales.cashReading))
+          ? 0
+          : parseFloat(sales.cashReading).toFixed(2)}
+      </p>
     </div>
   );
 }
 
 export default function Home() {
-  const FLOAT = 1000;
   const [handRollCount] = useAtom(handrollCountAtom);
   const [wastage] = useAtom(wastageAtom);
   const [pettyCash] = useAtom(pettyCashAtom);
@@ -52,10 +60,11 @@ export default function Home() {
     () => createTotalAtom([tillQuantitiesAtom], denominations),
     [],
   );
+
   const [totalCash] = useAtom(totalCashAtom);
   const [totalTill] = useAtom(totalTillAtom);
 
-  const variance = totalCash - FLOAT - totalSales.totalCashReading;
+  const variance = totalCash - totalFloat - totalSales.totalCashReading;
   const displayedVariance = Math.abs(variance) < 0.01 ? 0 : variance;
 
   const formattedVariance = new Intl.NumberFormat("en-US", {
@@ -103,7 +112,8 @@ export default function Home() {
             <p>${totalSales.totalCashReading.toFixed(2) || "0.00"}</p>
           </div>
           <div className="flex justify-between">
-            Cash to Bank: <p>${(totalCash - FLOAT).toFixed(2) || "0.00"}</p>
+            Cash to Bank:{" "}
+            <p>${(totalCash - totalFloat).toFixed(2) || "0.00"}</p>
           </div>
           <div className="flex justify-between">
             Petty Cash: <p>${parseFloat(pettyCash) || "0.00"}</p>
@@ -128,11 +138,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* <Link href="/" passHref>
-          <Button size="lg" className="my-8">
-            Next
-          </Button>
-        </Link> */}
+        <SaveButton />
       </main>
     </div>
   );
