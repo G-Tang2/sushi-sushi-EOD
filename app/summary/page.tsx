@@ -1,8 +1,6 @@
 "use client";
 
 import SaveButton from "@/components/saveButton";
-import { Button } from "@/components/ui/button";
-// import { Button } from "@/components/ui/button";
 import { denominations } from "@/lib/denominations";
 import {
   tillQuantitiesAtom,
@@ -18,7 +16,6 @@ import {
   totalFloat,
 } from "@/state/moneyAtoms";
 import { useAtom } from "jotai";
-// import Link from "next/link";
 import React from "react";
 
 function SingleSales({ sales, index }: { sales: SalesState; index: number }) {
@@ -137,7 +134,6 @@ export default function Home() {
             Hand Roll: <p>{handRollCount || "0"}</p>
           </div>
         </div>
-
         <SaveButton />
       </main>
     </div>
