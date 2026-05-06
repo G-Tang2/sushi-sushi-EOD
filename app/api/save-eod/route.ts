@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { toNullableFloat, toNullableInt } from "@/lib/parsers";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -8,21 +9,20 @@ const supabase = createClient(
 
 export async function POST(req: Request) {
   const body = await req.json();
-
   const { error } = await supabase.from("eod").insert([
     {
-      net_sales: body.netSales,
-      gross_sales: body.grossSales,
-      cash_to_bank: body.cashToBank,
-      cash_read: body.cashRead,
-      handroll: body.handRoll,
-      wastage: body.wastage,
-      petty_cash: body.pettyCash,
+      net_sales: toNullableFloat(body.netSales),
+      gross_sales: toNullableFloat(body.grossSales),
+      cash_to_bank: toNullableFloat(body.cashToBank),
+      cash_read: toNullableFloat(body.cashRead),
+      handroll: toNullableInt(body.handRoll),
+      wastage: toNullableFloat(body.wastage),
+      petty_cash: toNullableFloat(body.pettyCash),
     },
   ]);
 
   if (error) {
-    console.log(error);
+    console.log("error" + error);
     return NextResponse.json({ error }, { status: 500 });
   }
 

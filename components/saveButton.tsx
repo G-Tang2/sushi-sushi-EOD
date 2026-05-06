@@ -17,7 +17,7 @@ import { useMemo, useState } from "react";
 import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
 
-type Step = "idle" | "saving" | "saved" | "done";
+type Step = "idle" | "saving" | "saved" | "done" | "error";
 
 export default function SaveButton() {
   const [step, setStep] = useState<Step>("idle");
@@ -59,13 +59,17 @@ export default function SaveButton() {
     };
 
     try {
-      await fetch("/api/save-eod", {
+      const res = await fetch("/api/save-eod", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(snapshot),
       });
+
+      if (!res.ok) {
+        throw new Error(`Failed to save EOD report: ${res.status}`);
+      }
 
       setStep("saved");
 
@@ -74,7 +78,8 @@ export default function SaveButton() {
       }, 2000);
     } catch (err) {
       console.error(err);
-      setStep("idle");
+      console.log("Failed to save EOD report");
+      setStep("error");
     }
   };
 
@@ -91,14 +96,21 @@ export default function SaveButton() {
   }
 
   return (
-    <Button
-      size="lg"
-      className="my-8"
-      onClick={handleSave}
-      disabled={step === "saving" || step === "saved"}
-    >
-      {step === "saving" && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-      {step === "saved" ? "Saved!" : "Save"}
-    </Button>
+    <>
+      {step === "error" && (
+        <p className="text-red-500 text-base">
+          Failed to save report. Please try again.
+        </p>
+      )}
+      <Button
+        size="lg"
+        className="my-4"
+        onClick={handleSave}
+        disabled={step === "saving" || step === "saved"}
+      >
+        {step === "saving" && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+        {step === "saved" ? "Saved!" : "Save"}
+      </Button>
+    </>
   );
 }
