@@ -1,4 +1,3 @@
-// hooks/useResetMoneyCounters.ts
 "use client";
 
 import { useSetAtom } from "jotai";

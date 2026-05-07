@@ -1,10 +1,11 @@
 "use client";
 
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import {
   createTotalAtom,
   handrollCountAtom,
   pettyCashAtom,
+  reportInProgressAtom,
   safeQuantitiesAtom,
   safeRollsAtom,
   tillQuantitiesAtom,
@@ -16,11 +17,14 @@ import { denominations } from "@/lib/denominations";
 import { useMemo, useState } from "react";
 import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
+import useResetMoneyCounters from "@/app/hooks/useResetMoneyCounters";
 
 type Step = "idle" | "saving" | "saved" | "done" | "error";
 
 export default function SaveButton() {
   const [step, setStep] = useState<Step>("idle");
+  const resetMoneyCounters = useResetMoneyCounters();
+  const setReportInProgress = useSetAtom(reportInProgressAtom);
 
   const totalCashAtom = useMemo(
     () =>
@@ -72,6 +76,8 @@ export default function SaveButton() {
       }
 
       setStep("saved");
+      resetMoneyCounters();
+      setReportInProgress(false);
 
       setTimeout(() => {
         setStep("done");
