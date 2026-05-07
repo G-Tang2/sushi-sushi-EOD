@@ -40,6 +40,13 @@ export default function Home() {
               </Link>
             </div>
           )}
+          <div className="justify-center mb-4 flex">
+            <Link href="/history" passHref>
+              <Button size="lg">
+                History
+              </Button>
+            </Link>
+          </div>
         </div>
       </main>
     </div>
