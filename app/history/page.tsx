@@ -28,6 +28,7 @@ type Report = {
 
 const formatDate = (date: string) =>
   new Date(date).toLocaleDateString("en-AU", {
+    weekday: "short",
     day: "2-digit",
     month: "2-digit",
     year: "2-digit",
@@ -66,7 +67,7 @@ export default function Page() {
     <div className="flex min-h-screen items-center justify-center ">
       <main className="flex min-h-screen w-full max-w-3xl flex-col items-center sm:items-start">
         <h1 className="my-8 text-4xl font-bold">History</h1>
-        <div className="flex flex-col gap-2 bg-slate-50 w-sm py-4 px-6 mb-2 rounded-2xl">
+        <div className="flex flex-col gap-2 bg-slate-50 w-sm py-4 px-4 rounded-2xl">
           {loading ? (
             <div className="flex flex-col items-center justify-center gap-2">
               <LoaderCircle
