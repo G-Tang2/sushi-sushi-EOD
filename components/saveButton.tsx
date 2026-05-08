@@ -18,11 +18,13 @@ import { useMemo, useState } from "react";
 import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
 import useResetMoneyCounters from "@/app/hooks/useResetMoneyCounters";
+import { useRouter } from "next/navigation";
 
 type Step = "idle" | "saving" | "saved" | "done" | "error";
 
 export default function SaveButton() {
   const [step, setStep] = useState<Step>("idle");
+  const router = useRouter();
   const resetMoneyCounters = useResetMoneyCounters();
   const setReportInProgress = useSetAtom(reportInProgressAtom);
 
@@ -48,6 +50,12 @@ export default function SaveButton() {
   const cashRead = totalSales.totalCashReading.toFixed(2);
   const wastage = parseFloat(totalWastage);
   const pettyCash = parseFloat(totalPettyCash);
+
+  const handleGoHome = () => {
+    resetMoneyCounters();
+    setReportInProgress(false);
+    router.push("/");
+  };
 
   const handleSave = async () => {
     setStep("saving");
@@ -76,8 +84,6 @@ export default function SaveButton() {
       }
 
       setStep("saved");
-      resetMoneyCounters();
-      setReportInProgress(false);
 
       setTimeout(() => {
         setStep("done");
@@ -91,11 +97,7 @@ export default function SaveButton() {
 
   if (step === "done") {
     return (
-      <Button
-        size="lg"
-        className="my-8"
-        onClick={() => (window.location.href = "/")}
-      >
+      <Button size="lg" className="my-8" onClick={handleGoHome}>
         Go Home
       </Button>
     );

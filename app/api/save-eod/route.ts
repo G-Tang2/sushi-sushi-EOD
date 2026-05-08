@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
 import { toNullableFloat, toNullableInt } from "@/lib/parsers";
-import { supabase } from "@/lib/supabase";
-
+import { supabaseServer } from "@/lib/supabase/server";
 
 export async function POST(req: Request) {
   const body = await req.json();
-  const { error } = await supabase.from("report").insert([
+  const { error } = await supabaseServer.from("reports").insert([
     {
       net_sales: toNullableFloat(body.netSales),
       gross_sales: toNullableFloat(body.grossSales),
