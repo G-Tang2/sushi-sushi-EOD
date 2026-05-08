@@ -24,26 +24,30 @@ export default function Home() {
           <p className="mb-8 text-sm text-zinc-500">Designed for Sushi Sushi</p>
         </div>
         <div>
-          <div className="justify-center mb-4 flex">
-            <Link href="/safe" passHref>
-              <Button size="lg" onClick={handleStartNewReport}>
+          <div className="w-full flex flex-col gap-3">
+            <Link href="/safe" className="w-full">
+              <Button
+                size="lg"
+                onClick={handleStartNewReport}
+                className="w-full"
+              >
                 Create Report
               </Button>
             </Link>
-          </div>
-          {reportInProgress && (
-            <div className="justify-center mt-4 flex">
-              <Link href="/safe" passHref>
-                <Button size="lg" variant={"outline"}>
+            {reportInProgress && (
+              <Link href="/safe" className="w-full">
+                <Button size="lg" variant="outline" className="w-full">
                   Continue Report
                 </Button>
               </Link>
-            </div>
-          )}
-          <div className="justify-center mt-4 flex">
-            <Link href="/history" passHref>
-              <Button size="lg" variant={"outline"}>
-                History
+            )}
+            <Link href="/history" className="w-full">
+              <Button
+                size="lg"
+                variant="ghost"
+                className="w-full text-zinc-600 hover:text-zinc-900"
+              >
+                View History
               </Button>
             </Link>
           </div>

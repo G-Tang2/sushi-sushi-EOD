@@ -109,7 +109,7 @@ export default function Page() {
         </div>
         <Link href="/" passHref>
           <Button size="lg" className="my-8">
-            Home
+            Go Home
           </Button>
         </Link>
       </main>
