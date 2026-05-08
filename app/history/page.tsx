@@ -50,7 +50,10 @@ export default function Page() {
 
   useEffect(() => {
     const fetchReports = async () => {
-      const { data, error } = await supabaseClient.from("reports").select("*");
+      const { data, error } = await supabaseClient
+        .from("reports")
+        .select("*")
+        .order("created_at", { ascending: false });
 
       if (error) {
         console.error(error);
