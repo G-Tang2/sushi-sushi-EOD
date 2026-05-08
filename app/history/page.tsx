@@ -83,15 +83,15 @@ export default function Page() {
                   <TableHead className="font-medium text-center">
                     Date
                   </TableHead>
-                  <TableHead> Net Sale</TableHead>
+                  <TableHead className="text-center"> Net Sale</TableHead>
                   <TableHead className="text-center">Handroll</TableHead>
-                  <TableHead className="text-right">Wastage</TableHead>
+                  <TableHead className="text-center">Wastage</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {reports.map((report) => (
                   <TableRow key={report.id}>
-                    <TableCell className="font-medium text-center">
+                    <TableCell className="font-medium">
                       {formatDate(report.created_at)}
                     </TableCell>
                     <TableCell>{formatCurrency(report.net_sales)}</TableCell>
