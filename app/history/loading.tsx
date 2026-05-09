@@ -8,7 +8,7 @@ export default function Loading() {
         <div className="flex flex-col gap-2 bg-slate-50 w-sm py-4 px-4 rounded-2xl">
           <div className="flex flex-col items-center justify-center gap-2">
             <LoaderCircle size={32} className="animate-spin text-zinc-500" />
-            <div>Loading report...</div>
+            <div>Loading reports...</div>
           </div>
         </div>
       </main>
