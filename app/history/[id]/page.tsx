@@ -138,7 +138,7 @@ export default function Page() {
               step="0.01"
               value={value ?? ""}
               onChange={(e) => handleChange(field, e.target.value)}
-              className="w-28 rounded border px-2 text-right"
+              className="w-28 rounded border px-2 text-right text-base"
             />
           ) : isCurrency ? (
             formatCurrency(Number(value))
