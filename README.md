@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🍣 Sushi Sushi EOD
+
+A full-stack web application for **Sushi Sushi**, designed to streamline end-of-day (EOD) operations, reduce manual work, and improve the accuracy of daily store reporting.
+
+**🌐 Live Demo:** https://sushi-sushi-eod.vercel.app/
+
+## Features
+
+- 📋 End-of-day reporting workflow
+- 💰 Sales and cash reconciliation
+- 📦 Inventory tracking
+- 👥 Employee-friendly interface
+- 📊 Daily summary dashboard
+- ✅ Form validation and error handling
+- 📱 Responsive design for desktop and tablet
+
+## Tech Stack
+
+### Frontend
+- React / Next.js
+- TypeScript
+- Tailwind CSS
+
+### Backend
+- Node.js
+- Supabase
+- PostgreSQL
+
+### Development
+- Git & GitHub
+- ESLint
+- Prettier
+
+## Screenshots
+
+> Add screenshots here
+
+| Dashboard | EOD Report |
+|-----------|------------|
+| ![](docs/dashboard.png) | ![](docs/report.png) |
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 20+
+- npm (or pnpm)
+- Supabase project
+
+### Installation
+
+```bash
+git clone https://github.com/G-Tang2/sushi-sushi-EOD.git
+cd sushi-sushi-EOD
+
+npm install
+```
+
+Create a `.env.local` file:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project Structure
 
-## Learn More
+```
+src/
+├── app/              # Next.js App Router
+├── components/       # Reusable UI components
+├── lib/              # Utilities and API helpers
+├── hooks/            # Custom React hooks
+├── types/            # TypeScript definitions
+└── styles/           # Global styling
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Goals
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This project was built to:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Reduce manual end-of-day paperwork
+- Improve reporting accuracy
+- Simplify store closing procedures
+- Provide a clean, intuitive user experience
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project is licensed under the MIT License.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+Built by **Garvin Tang**
