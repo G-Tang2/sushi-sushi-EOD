@@ -47,7 +47,7 @@ export default function LooseMoneyCounter({
       {denominations.map(({ label }) => (
         <div
           key={label}
-          className="flex items-center justify-center gap-1 w-36"
+          className="flex items-center justify-center gap-1 w-32"
         >
           <button
             onClick={() => decrement(label)}

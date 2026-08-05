@@ -17,17 +17,13 @@ import {
 } from "@/state/moneyAtoms";
 import { useAtom } from "jotai";
 import React from "react";
+import { formatCurrency } from "@/lib/formatters";
 
 function SingleSales({ sales, index }: { sales: SalesState; index: number }) {
   return (
     <div className="flex justify-between">
       Cash read POS {index + 1}:{" "}
-      <p>
-        $
-        {isNaN(parseFloat(sales.cashReading))
-          ? 0
-          : parseFloat(sales.cashReading).toFixed(2)}
-      </p>
+      <p>{formatCurrency(parseFloat(sales.cashReading))}</p>
     </div>
   );
 }
@@ -64,19 +60,16 @@ export default function Home() {
   const variance = totalCash - totalFloat - totalSales.totalCashReading;
   const displayedVariance = Math.abs(variance) < 0.01 ? 0 : variance;
 
-  const formattedVariance = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  }).format(displayedVariance);
+  const formattedVariance = formatCurrency(displayedVariance);
 
   return (
-    <div className="flex min-h-screen items-center justify-center ">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center sm:items-start">
+    <div className="flex min-h-screen items-center justify-center px-4">
+      <main className="flex w-full max-w-3xl flex-col items-center sm:items-start">
         <h1 className="my-8 text-4xl font-bold">Summary</h1>
         <p className="font-medium text-lg">
           {dateString} {dayName}
         </p>
-        <div className="bg-slate-50 rounded-2xl w-sm p-4 m-4 space-y-4">
+        <div className="bg-slate-50 rounded-2xl w-full max-w-sm p-4 m-4 space-y-4">
           <div className="flex flex-col justify-between items-center">
             {Object.entries(tillQuantities).map(([label, value]) => {
               const denom = denominations.find((d) => d.label === label);
@@ -100,35 +93,35 @@ export default function Home() {
             Total POS Count: ${totalTill.toFixed(2)}
           </p>
         </div>
-        <div className="bg-slate-50 rounded-2xl w-sm px-12 py-4 m-4 space-y-4">
+        <div className="bg-slate-50 rounded-2xl w-full max-w-sm px-6 sm:px-12 py-4 m-4 space-y-4">
           {sales.map((atom, index) => (
             <SingleSales key={index} sales={atom} index={index} />
           ))}
           <div className="flex justify-between">
             Total Cash Read:{" "}
-            <p>${totalSales.totalCashReading.toFixed(2) || "0.00"}</p>
+            <p>{formatCurrency(totalSales.totalCashReading)}</p>
           </div>
           <div className="flex justify-between">
             Cash to Bank:{" "}
-            <p>${(totalCash - totalFloat).toFixed(2) || "0.00"}</p>
+            <p>{formatCurrency(totalCash - totalFloat)}</p>
           </div>
           <div className="flex justify-between">
-            Petty Cash: <p>${parseFloat(pettyCash) || "0.00"}</p>
+            Petty Cash: <p>{formatCurrency(parseFloat(pettyCash))}</p>
           </div>
           <div className="flex justify-between">
             Variance: <p>{formattedVariance}</p>
           </div>
           <div className="flex justify-between">
-            Wastage: <p>${parseFloat(wastage) || "0.00"}</p>
+            Wastage: <p>{formatCurrency(parseFloat(wastage))}</p>
           </div>
         </div>
-        <div className="bg-slate-50 rounded-2xl w-sm px-12 py-4 m-4 space-y-4">
+        <div className="bg-slate-50 rounded-2xl w-full max-w-sm px-6 sm:px-12 py-4 m-4 space-y-4">
           <div className="flex justify-between">
-            Net Sale: <p>${totalSales.totalNetSales.toFixed(2) || "0.00"}</p>
+            Net Sale: <p>{formatCurrency(totalSales.totalNetSales)}</p>
           </div>
           <div className="flex justify-between">
             Gross Sale:{" "}
-            <p>${totalSales.totalGrossSales.toFixed(2) || "0.00"}</p>
+            <p>{formatCurrency(totalSales.totalGrossSales)}</p>
           </div>
           <div className="flex justify-between">
             Hand Roll: <p>{handRollCount || "0"}</p>

@@ -38,10 +38,6 @@ export default function OcrUpload() {
 
       setStatus('Running OCR...');
 
-    //   await worker.setParameters({
-    //     tessedit_pageseg_mode: '6',
-    //   });
-
       const {
         data: { text },
       } = await worker.recognize(processedBlob);

@@ -77,7 +77,6 @@ export default function Page() {
 
   const handleChange = (field: keyof Report, value: string | number) => {
     if (!editedReport) return;
-    console.log("Changing", field, "to", value);
 
     setEditedReport({
       ...editedReport,
@@ -89,7 +88,6 @@ export default function Page() {
     if (!editedReport) return;
 
     setSaving(true);
-    console.log("Saving report", editedReport);
 
     const { error } = await supabaseClient
       .from("reports")
@@ -151,11 +149,11 @@ export default function Page() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center sm:items-start">
+    <div className="flex min-h-screen items-center justify-center px-4">
+      <main className="flex w-full max-w-3xl flex-col items-center sm:items-start">
         <h1 className="my-8 text-4xl font-bold">EOD Report</h1>
 
-        <div className="flex w-sm flex-col gap-2 rounded-2xl bg-slate-50 px-4 py-4">
+        <div className="flex w-full max-w-sm flex-col gap-2 rounded-2xl bg-slate-50 px-4 py-4">
           {loading ? (
             <div className="flex flex-col items-center justify-center gap-2">
               <LoaderCircle size={32} className="animate-spin text-zinc-500" />

@@ -127,10 +127,10 @@ export default function EODReport() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center ">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center sm:items-start">
+    <div className="flex min-h-screen items-center justify-center px-4">
+      <main className="flex w-full max-w-3xl flex-col items-center sm:items-start">
         <h1 className="my-8 text-4xl font-bold">End of Day Report</h1>
-        <div className="flex flex-col gap-2 bg-slate-50 w-sm py-4 px-6 mb-2 rounded-2xl">
+        <div className="flex w-full max-w-sm flex-col gap-2 bg-slate-50 py-4 px-6 mb-2 rounded-2xl">
           <label className="flex justify-between items-center">
             Handroll Count:
             <input
@@ -183,7 +183,7 @@ export default function EODReport() {
             </div>
           </label>
         </div>
-        <div className="flex flex-col gap-2 bg-slate-50 w-sm py-4 px-6 mb-2 rounded-2xl">
+        <div className="flex w-full max-w-sm flex-col gap-2 bg-slate-50 py-4 px-6 mb-2 rounded-2xl">
           {atoms.map((atom, idx) => (
             <React.Fragment key={idx}>
               {idx !== 0 && <hr className="my-2 border-gray-600" />}
