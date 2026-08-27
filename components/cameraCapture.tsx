@@ -1,67 +1,158 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { createWorker } from 'tesseract.js';
+import { useState } from "react";
+import { scanReceiptImage } from "@/lib/scanReceipt";
 
-export default function OcrUpload() {
-  const [preview, setPreview] = useState('');
-  const [text, setText] = useState('');
-  const [status, setStatus] = useState('');
+interface Totals {
+  cash: string;
+  totalNet: string;
+  totalGross: string;
+}
 
-  const preprocessImage = async (file: File): Promise<Blob> => {
-    const formData = new FormData()
-    formData.append('file', file)
+const emptyTotals: Totals = { cash: "", totalNet: "", totalGross: "" };
 
-    const res = await fetch('/api/image', {
-      method: 'POST',
-      body: formData,
-    })
+const SUSPICIOUS_THRESHOLD = 10000;
 
-    const blob = await res.blob()
+function isSuspicious(value: string): boolean {
+  const parsed = parseFloat(value);
+  return !Number.isNaN(parsed) && parsed >= SUSPICIOUS_THRESHOLD;
+}
 
-    return blob;
-  };
+interface TotalFieldProps {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+}
+
+function TotalField({ label, value, onChange }: TotalFieldProps) {
+  const suspicious = isSuspicious(value);
+
+  return (
+    <label className="flex items-center justify-between gap-2">
+      {label}
+      <div className="flex flex-col items-end">
+        <div>
+          $
+          <input
+            type="text"
+            inputMode="decimal"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            placeholder="0.00"
+            className={`ml-2 w-24 rounded border px-2 py-1 text-right text-base ${
+              suspicious ? "border-red-500 bg-red-50 text-red-600" : ""
+            }`}
+          />
+        </div>
+        {suspicious && (
+          <span className="text-xs text-red-600">
+            Unusually high — check photo
+          </span>
+        )}
+      </div>
+    </label>
+  );
+}
+
+export default function CameraCapture() {
+  const [preview, setPreview] = useState("");
+  const [status, setStatus] = useState("");
+  const [rawText, setRawText] = useState("");
+  const [showRaw, setShowRaw] = useState(false);
+  const [values, setValues] = useState<Totals>(emptyTotals);
 
   const handleFileChange = async (
-    e: React.ChangeEvent<HTMLInputElement>
+    e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     setPreview(URL.createObjectURL(file));
-    setStatus('Preprocessing image...');
-
-    const worker = await createWorker('eng');
+    setStatus("Reading receipt...");
+    setRawText("");
+    setShowRaw(false);
+    setValues(emptyTotals);
 
     try {
-      const processedBlob = await preprocessImage(file);
+      const totals = await scanReceiptImage(file);
 
-      setStatus('Running OCR...');
+      setRawText(totals.rawText);
+      setValues({
+        cash: totals.cash ?? "",
+        totalNet: totals.totalNet ?? "",
+        totalGross: totals.totalGross ?? "",
+      });
 
-    //   await worker.setParameters({
-    //     tessedit_pageseg_mode: '6',
-    //   });
-
-      const {
-        data: { text },
-      } = await worker.recognize(processedBlob);
-
-      setText(text);
-      setStatus('Done');
+      setStatus("Done. Double-check the values below against the photo.");
     } catch (err) {
       console.error(err);
-      setStatus('OCR failed');
-    } finally {
-      await worker.terminate();
+      setStatus("Scan failed. Enter values manually.");
+    }
+  };
+
+  const handleValueChange = (field: keyof Totals, value: string) => {
+    if (/^\d*\.?\d{0,2}$/.test(value)) {
+      setValues((prev) => ({ ...prev, [field]: value }));
     }
   };
 
   return (
     <div className="space-y-4">
-      <input type="file" accept="image/*" onChange={handleFileChange} />
-      {preview && <img src={preview} alt="Preview" className="max-w-full rounded" />}
-      <p>{status}</p>
-      <textarea value={text} readOnly rows={12} className="w-full border p-2" />
+      <input
+        type="file"
+        accept="image/*"
+        capture="environment"
+        onChange={handleFileChange}
+      />
+
+      {preview && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={preview}
+          alt="Receipt preview"
+          className="max-w-full rounded"
+        />
+      )}
+
+      {status && <p className="text-sm text-zinc-600">{status}</p>}
+
+      <div className="space-y-2">
+        <TotalField
+          label="Cash"
+          value={values.cash}
+          onChange={(v) => handleValueChange("cash", v)}
+        />
+        <TotalField
+          label="Total Net"
+          value={values.totalNet}
+          onChange={(v) => handleValueChange("totalNet", v)}
+        />
+        <TotalField
+          label="Total Gross"
+          value={values.totalGross}
+          onChange={(v) => handleValueChange("totalGross", v)}
+        />
+      </div>
+
+      {rawText && (
+        <div>
+          <button
+            type="button"
+            onClick={() => setShowRaw((v) => !v)}
+            className="text-xs text-zinc-500 underline"
+          >
+            {showRaw ? "Hide" : "Show"} raw scanned text
+          </button>
+          {showRaw && (
+            <textarea
+              value={rawText}
+              readOnly
+              rows={10}
+              className="mt-2 w-full border p-2 text-xs"
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 }

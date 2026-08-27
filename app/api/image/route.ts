@@ -15,7 +15,11 @@ export async function POST(req: Request) {
   const input = Buffer.from(arrayBuffer)
 
   const output = await sharp(input)
-    .resize({ width: 1200, withoutEnlargement: true })
+    .resize({ width: 1600, withoutEnlargement: true })
+    .grayscale()
+    .normalize()
+    .linear(1.35, -30)
+    .sharpen()
     .png({ compressionLevel: 9 })
     .toBuffer()
 

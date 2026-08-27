@@ -35,46 +35,50 @@ export default function MoneyCounter({
   const [tillQuantities] = useAtom(tillQuantitiesAtom);
 
   return (
-    <div className="bg-slate-50 rounded-2xl w-sm p-4 space-y-4">
-      {/* Header Row */}
-      <div className="flex text-white rounded-md bg-neutral-800 py-1 items-center mb-2 font-semibold">
-        <div className="w-14 shrink-0"></div>
-        <div className="w-36 shrink-0 text-center">Loose</div>
-        {rollsAtom && <div className="w-36 shrink-0 text-center">Rolls</div>}
-        {limit && (
-          <div className="w-36 shrink-0 text-center">Available</div>
-        )}
-      </div>
-
-      {/* Denomination rows */}
-      {denominations.map(({ label, rollSize }) => (
-        <div key={label} className="flex items-center my-4">
-          <div className="w-14 shrink-0 text-right pr-2">{label}</div>
-
-          <div className="w-36 shrink-0">
-            <LooseCounter
-              denominations={[{ label }]}
-              quantitiesAtom={quantitiesAtom}
-              limit={limit ? tillQuantities[label] : 999}
-            />
+    <div className="bg-slate-50 rounded-2xl w-full max-w-sm p-4 space-y-4">
+      <div className="overflow-x-auto">
+        <div className="w-fit min-w-full">
+          {/* Header Row */}
+          <div className="flex text-white rounded-md bg-neutral-800 py-1 items-center mb-2 font-semibold">
+            <div className="w-12 shrink-0"></div>
+            <div className="w-32 shrink-0 text-center">Loose</div>
+            {rollsAtom && <div className="w-32 shrink-0 text-center">Rolls</div>}
+            {limit && (
+              <div className="w-32 shrink-0 text-center">Available</div>
+            )}
           </div>
 
-          {rollsAtom && (
-            <div className="w-36 shrink-0">
-              <RollsCounter
-                denominations={[{ label, rollSize }]}
-                rollsAtom={rollsAtom}
-              />
-            </div>
-          )}
+          {/* Denomination rows */}
+          {denominations.map(({ label, rollSize }) => (
+            <div key={label} className="flex items-center my-4">
+              <div className="w-12 shrink-0 text-right pr-2">{label}</div>
 
-          {limit && (
-            <div className="w-36 shrink-0 text-center">
-              <div>{tillQuantities[label]}</div>
+              <div className="w-32 shrink-0">
+                <LooseCounter
+                  denominations={[{ label }]}
+                  quantitiesAtom={quantitiesAtom}
+                  limit={limit ? tillQuantities[label] : 999}
+                />
+              </div>
+
+              {rollsAtom && (
+                <div className="w-32 shrink-0">
+                  <RollsCounter
+                    denominations={[{ label, rollSize }]}
+                    rollsAtom={rollsAtom}
+                  />
+                </div>
+              )}
+
+              {limit && (
+                <div className="w-32 shrink-0 text-center">
+                  <div>{tillQuantities[label]}</div>
+                </div>
+              )}
             </div>
-          )}
+          ))}
         </div>
-      ))}
+      </div>
 
       {target ? (
         <div className="mt-5 mb-0 text-sm text-center text-gray-600">

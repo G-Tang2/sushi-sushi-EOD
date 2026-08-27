@@ -90,7 +90,6 @@ export default function SaveButton() {
       }, 2000);
     } catch (err) {
       console.error(err);
-      console.log("Failed to save EOD report");
       setStep("error");
     }
   };

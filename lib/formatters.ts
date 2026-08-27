@@ -7,7 +7,7 @@ export const formatDate = (date: string) =>
   });
 
 export const formatCurrency = (amount: number) => {
-  if (amount === null || amount === undefined) {
+  if (amount === null || amount === undefined || Number.isNaN(amount)) {
     return "$0.00";
   }
   return amount.toLocaleString("en-AU", {

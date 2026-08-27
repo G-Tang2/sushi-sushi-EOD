@@ -41,7 +41,7 @@ export default function RollMoneyCounter({
         rollSize ? (
           <div
             key={label}
-            className="flex items-center justify-center gap-1 w-36"
+            className="flex items-center justify-center gap-1 w-32"
           >
             <button
               onClick={() => decrement(label)}
@@ -69,7 +69,7 @@ export default function RollMoneyCounter({
             </button>
           </div>
         ) : (
-          <div key={label} className="w-36" /> // Space reserved for alignment (no rollSize)
+          <div key={label} className="w-32" /> // Space reserved for alignment (no rollSize)
         ),
       )}
     </>
