@@ -50,6 +50,15 @@ export default function Home() {
                 View History
               </Button>
             </Link>
+            <Link href="/camera" className="w-full">
+              <Button
+                size="lg"
+                variant="ghost"
+                className="w-full text-zinc-600 hover:text-zinc-900"
+              >
+                Scan Receipt
+              </Button>
+            </Link>
           </div>
         </div>
       </main>

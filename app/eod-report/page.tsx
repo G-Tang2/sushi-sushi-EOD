@@ -13,6 +13,8 @@ import {
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
+import { ScanReceiptButton } from "@/components/scanReceiptButton";
+import type { ScanReceiptResult } from "@/lib/scanReceipt";
 
 interface SalesStateEditorProps {
   idx: number;
@@ -27,15 +29,27 @@ function SalesStateEditor({
   onChange,
   onDelete,
 }: SalesStateEditorProps) {
+  const handleScanned = (totals: ScanReceiptResult) => {
+    onChange({
+      ...sales,
+      netSales: totals.totalNet ?? "",
+      grossSales: totals.totalGross ?? "",
+      cashReading: totals.cash ?? "",
+    });
+  };
+
   return (
     <div className="flex flex-col order mb-1 space-y-2">
       <div className="flex items-center justify-between">
         <p className="font-semibold">POS {idx + 1}</p>
-        {idx != 0 && (
-          <button onClick={onDelete} aria-label="Delete sales entry">
-            <Trash2 size={24} color="red" />
-          </button>
-        )}
+        <div className="flex items-center gap-3">
+          <ScanReceiptButton onScanned={handleScanned} />
+          {idx != 0 && (
+            <button onClick={onDelete} aria-label="Delete sales entry">
+              <Trash2 size={24} color="red" />
+            </button>
+          )}
+        </div>
       </div>
       <label className="justify-between flex items-center">
         Net Sales:
