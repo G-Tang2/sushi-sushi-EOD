@@ -55,7 +55,7 @@ export default function Takings() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center px-4">
+    <div className="flex min-h-screen items-start justify-center px-4 pt-10 sm:pt-16">
       <main className="flex w-full max-w-3xl flex-col items-center sm:items-start">
         <h1 className="my-8 text-4xl font-bold">Bank Takings</h1>
         {/* Total value display */}
