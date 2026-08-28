@@ -41,8 +41,8 @@ export default function MoneyCounter({
           {/* Header Row */}
           <div className="flex text-white rounded-md bg-neutral-800 py-1 items-center mb-2 font-semibold">
             <div className="w-12 shrink-0"></div>
-            <div className="w-32 shrink-0 text-center">Loose</div>
-            {rollsAtom && <div className="w-32 shrink-0 text-center">Rolls</div>}
+            <div className="w-32 shrink-0 mr-2 text-center">Loose</div>
+            {rollsAtom && <div className="w-32 shrink-0 mr-2 text-center">Rolls</div>}
             {limit && (
               <div className="w-32 shrink-0 text-center">Available</div>
             )}
@@ -53,7 +53,7 @@ export default function MoneyCounter({
             <div key={label} className="flex items-center my-4">
               <div className="w-12 shrink-0 text-right pr-2">{label}</div>
 
-              <div className="w-32 shrink-0">
+              <div className="w-32 shrink-0 mr-2">
                 <LooseCounter
                   denominations={[{ label }]}
                   quantitiesAtom={quantitiesAtom}
@@ -62,7 +62,7 @@ export default function MoneyCounter({
               </div>
 
               {rollsAtom && (
-                <div className="w-32 shrink-0">
+                <div className="w-32 shrink-0 mr-2">
                   <RollsCounter
                     denominations={[{ label, rollSize }]}
                     rollsAtom={rollsAtom}
