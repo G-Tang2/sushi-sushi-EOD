@@ -15,6 +15,7 @@ export async function POST(req: Request) {
   const input = Buffer.from(arrayBuffer)
 
   const output = await sharp(input)
+    .rotate() // apply EXIF orientation (e.g. from a live phone camera capture) before anything else
     .resize({ width: 1600, withoutEnlargement: true })
     .grayscale()
     .normalize()
