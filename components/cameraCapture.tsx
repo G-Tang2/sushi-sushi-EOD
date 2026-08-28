@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Camera, ImageUp } from "lucide-react";
 import { scanReceiptImage } from "@/lib/scanReceipt";
 
 interface Totals {
@@ -98,12 +99,29 @@ export default function CameraCapture() {
 
   return (
     <div className="space-y-4">
-      <input
-        type="file"
-        accept="image/*"
-        capture="environment"
-        onChange={handleFileChange}
-      />
+      <div className="flex gap-2">
+        <label className="inline-flex cursor-pointer items-center gap-2 rounded bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">
+          <Camera size={16} />
+          Take Photo
+          <input
+            type="file"
+            accept="image/*"
+            capture="environment"
+            className="hidden"
+            onChange={handleFileChange}
+          />
+        </label>
+        <label className="inline-flex cursor-pointer items-center gap-2 rounded border px-4 py-2 text-sm font-medium hover:bg-zinc-50">
+          <ImageUp size={16} />
+          Upload Photo
+          <input
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={handleFileChange}
+          />
+        </label>
+      </div>
 
       {preview && (
         // eslint-disable-next-line @next/next/no-img-element
