@@ -1,4 +1,4 @@
-import { createWorker, PSM } from "tesseract.js";
+import { createWorker, PSM, type Worker } from "tesseract.js";
 import { parseReceiptTotals } from "@/lib/receiptParser";
 import {
   collectWords,
@@ -16,6 +16,21 @@ export interface ScanReceiptResult {
   cash: string | null;
   totalNet: string | null;
   totalGross: string | null;
+}
+
+const FIELDS: ReceiptField[] = ["cash", "totalNet", "totalGross"];
+
+// Workers are slow to spin up (WASM init + language data load) but cheap to
+// reuse, so a small pool is created once and kept alive for the page's
+// lifetime instead of recreated per scan. One worker per field also lets the
+// three amount crops be recognized concurrently instead of sequentially.
+let workerPoolPromise: Promise<Worker[]> | null = null;
+
+function getWorkerPool(): Promise<Worker[]> {
+  if (!workerPoolPromise) {
+    workerPoolPromise = Promise.all(FIELDS.map(() => createWorker("eng")));
+  }
+  return workerPoolPromise;
 }
 
 async function preprocessImage(file: File): Promise<Blob> {
@@ -40,34 +55,28 @@ async function preprocessImage(file: File): Promise<Blob> {
 export async function scanReceiptImage(
   file: File,
 ): Promise<ScanReceiptResult> {
-  const worker = await createWorker("eng");
+  const workers = await getWorkerPool();
+  const pageWorker = workers[0];
 
-  try {
-    const processedBlob = await preprocessImage(file);
-    const bitmap = await createImageBitmap(processedBlob);
+  const processedBlob = await preprocessImage(file);
+  const bitmap = await createImageBitmap(processedBlob);
 
-    await worker.setParameters({
-      tessedit_pageseg_mode: PSM.SINGLE_BLOCK,
-      tessedit_char_whitelist: "",
-    });
-    const { data: pageData } = await worker.recognize(
-      processedBlob,
-      {},
-      { text: true, blocks: true },
-    );
+  await pageWorker.setParameters({
+    tessedit_pageseg_mode: PSM.SINGLE_BLOCK,
+    tessedit_char_whitelist: "",
+  });
+  const { data: pageData } = await pageWorker.recognize(
+    processedBlob,
+    {},
+    { text: true, blocks: true },
+  );
 
-    const words = collectWords(pageData.blocks);
-    const fallback = parseReceiptTotals(pageData.text);
+  const words = collectWords(pageData.blocks);
+  const fallback = parseReceiptTotals(pageData.text);
 
-    const fields: ReceiptField[] = ["cash", "totalNet", "totalGross"];
-    const result: ScanReceiptResult = {
-      rawText: pageData.text,
-      cash: null,
-      totalNet: null,
-      totalGross: null,
-    };
-
-    for (const field of fields) {
+  const fieldValues = await Promise.all(
+    FIELDS.map(async (field, i) => {
+      const worker = workers[i];
       const labelWords = findLabelWords(words, FIELD_LABEL_PATTERNS[field]);
       const amountWord = labelWords
         ? findAmountWord(words, labelWords)
@@ -86,15 +95,23 @@ export async function scanReceiptImage(
         });
         const { data: cropData } = await worker.recognize(cropBlob);
         value = parseAmountFromText(cropData.text);
-        await worker.setParameters({ tessedit_char_whitelist: "" });
       }
 
-      result[field] = value ?? fallback[field] ?? null;
-    }
+      return value ?? fallback[field] ?? null;
+    }),
+  );
 
-    bitmap.close();
-    return result;
-  } finally {
-    await worker.terminate();
-  }
+  bitmap.close();
+
+  const result: ScanReceiptResult = {
+    rawText: pageData.text,
+    cash: null,
+    totalNet: null,
+    totalGross: null,
+  };
+  FIELDS.forEach((field, i) => {
+    result[field] = fieldValues[i];
+  });
+
+  return result;
 }
